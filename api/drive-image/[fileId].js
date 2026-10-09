@@ -1,4 +1,3 @@
-```javascript
 const { google } = require("googleapis");
 
 module.exports = async function handler(req, res) {
@@ -87,4 +86,3 @@ module.exports = async function handler(req, res) {
     }
   }
 };
-```
