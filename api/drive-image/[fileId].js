@@ -52,14 +52,15 @@ module.exports = async function handler(req, res) {
 
     // Download the image as a stream
     const imageResponse = await drive.files.get(
-      {
-        fileId,
-        alt: "media",
-      },
-      {
-        responseType: "stream",
-      }
-    );
+  {
+    fileId,
+    alt: "media",
+    acknowledgeAbuse: true,
+  },
+  {
+    responseType: "stream",
+  }
+);
 
     res.setHeader("Content-Type", mimeType);
     res.setHeader("Cache-Control", "public, max-age=3600");
