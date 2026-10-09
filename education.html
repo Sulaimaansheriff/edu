@@ -1,0 +1,4815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sulaimaan Sheriff — Experience, education, certifications and professional journey.">
+    <meta name="author" content="Sulaimaan Sheriff">
+    <title>Experience & Education — Sulaimaan Sheriff</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #6366f1;
+            --accent-rgb: 99, 102, 241;
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --surface-soft: #f4f4f5;
+            --text: #18181b;
+            --text-muted: #71717a;
+            --text-soft: #a1a1aa;
+            --border: rgba(24, 24, 27, 0.08);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.09);
+            --container: 1180px;
+            --indigo: #6c63ff;
+            --cyan: #00d4ff;
+            --rose: #f43f5e;
+            --gold: #f59e0b;
+            --grad: linear-gradient(135deg, #6c63ff, #00d4ff, #f43f5e);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #09090b;
+                --surface: #111113;
+                --surface-soft: #18181b;
+                --text: #fafafa;
+                --text-muted: #a1a1aa;
+                --text-soft: #71717a;
+                --border: rgba(255, 255, 255, 0.08);
+                --shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+                --shadow-hover: 0 25px 60px rgba(0, 0, 0, 0.35);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .year-pill:focus,
+        .year-pill:focus-visible,
+        .year-nav-btn:focus,
+        .year-nav-btn:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .year-nav-btn::-moz-focus-inner,
+        .year-pill::-moz-focus-inner {
+            border: 0;
+        }
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .experience-section {
+            position: relative;
+            overflow: hidden;
+            padding: 110px 24px;
+        }
+
+        .container {
+            width: 100%;
+            margin-left: 0;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ambient {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            opacity: 0.14;
+        }
+
+        .ambient-one {
+            top: 15%;
+            left: 10%;
+            background: var(--accent);
+        }
+
+        .ambient-two {
+            right: 5%;
+            bottom: 8%;
+            background: #f97316;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 40px;
+            margin-bottom: 70px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 24px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .section-title {
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.045em;
+        }
+
+        .section-description {
+            max-width: 470px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           GRID
+        ========================================================= */
+
+        .journey-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(24px, 4vw, 50px);
+            align-items: start;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 34px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .column-icon {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(var(--accent-rgb), 0.10);
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .column-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .column-title {
+            font-family: "Manrope", sans-serif;
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .column-subtitle {
+            margin-top: 2px;
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           EDUCATION TIMELINE
+        ========================================================= */
+
+        .edu-scroll-box {
+            width: 100%;
+            min-width: 0;
+            height: clamp(480px, calc(100vh - 420px), 2100px);
+            max-height: 2100px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 6px;
+            border-radius: var(--radius-lg);
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: auto;
+            touch-action: none;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,0,0,0.25) transparent;        }
+
+        .edu-scroll-box.dragging {
+            cursor: grabbing;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .edu-scroll-box a,
+        .edu-scroll-box button,
+        .edu-scroll-box input,
+        .edu-scroll-box select,
+        .edu-scroll-box textarea {
+            cursor: default;
+        }
+
+        .edu-scroll-box::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        .edu-scroll-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .edu-scroll-box::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.22);
+            border-radius: 999px;
+            border: 2px solid #fff;
+        }
+
+        .timeline {
+            position: relative;
+            margin-left: 18px;
+            padding-left: 34px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(
+                180deg,
+                var(--indigo),
+                var(--cyan),
+                var(--rose),
+                transparent
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-node {
+            position: absolute;
+            left: -42px;
+            top: 30px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--grad);
+            box-shadow:
+                0 0 0 4px var(--bg),
+                0 0 16px rgba(108,99,255,0.5);
+            z-index: 2;
+        }
+
+        /* =========================================================
+           CARDS
+        ========================================================= */
+
+        .journey-card {
+            position: relative;
+            width: 100%;
+            padding: 26px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--surface),
+                    rgba(var(--accent-rgb), 0.015)
+                );
+            box-shadow: var(--shadow);
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+        }
+
+        .journey-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(var(--accent-rgb), 0.20);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-family: "Manrope", sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            transition: color 0.25s ease;
+        }
+
+        .journey-card:hover .card-title {
+            color: var(--accent);
+        }
+
+        .card-subtitle {
+            margin-top: 5px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .date-badge {
+            flex-shrink: 0;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(var(--accent-rgb), 0.09);
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .organization {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            color: var(--text);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .organization svg {
+            width: 15px;
+            height: 15px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .card-description {
+            padding: 13px 15px;
+            border-radius: 13px;
+            background: var(--surface-soft);
+            color: var(--text-muted);
+            font-size: 11px;
+            line-height: 1.75;
+        }
+
+        .card-list {
+            display: grid;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .card-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .card-list li::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            margin-top: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: var(--surface-soft);
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .tag.accent {
+            background: rgba(var(--accent-rgb),0.10);
+            color: var(--accent);
+        }
+
+        .tag.success {
+            background: rgba(16,185,129,0.10);
+            color: var(--success);
+        }
+
+        .certificate-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 9px;
+            margin-top: 18px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border-radius: 11px;
+            font-size: 10px;
+            font-weight: 700;
+            transition: transform 0.25s ease, background 0.25s ease;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .button svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .button-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 7px 18px rgba(var(--accent-rgb),0.20);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            background: #5558e8;
+        }
+
+        .button-secondary {
+            background: rgba(228,228,231,0.8);
+            color: var(--text);
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            color: var(--accent);
+        }
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.08s; }
+        .delay-2 { transition-delay: 0.16s; }
+        .delay-3 { transition-delay: 0.24s; }
+        .delay-4 { transition-delay: 0.32s; }
+
+        /* =========================================================
+           CERTIFICATION COLUMN
+        ========================================================= */
+
+        .cert-column {
+            position: relative;
+            min-width: 0;
+        }
+
+        .cert-sticky-wrap {
+            position: sticky;
+            top: 24px;
+        }
+
+        .year-nav {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--surface),
+                    rgba(var(--accent-rgb), 0.015)
+                );
+            box-shadow: var(--shadow);
+        }
+
+        .year-nav-years {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            gap: 7px;
+            flex-wrap: wrap;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .year-pill {
+            border: 1px solid transparent;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--surface-soft);
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+            user-select: none;
+        }
+
+        .year-pill:hover {
+            transform: translateY(-1px);
+            color: var(--accent);
+        }
+
+        .year-pill.active {
+            background: rgba(var(--accent-rgb), 0.12);
+            color: var(--accent);
+            border-color: rgba(var(--accent-rgb), 0.25);
+        }
+
+        .year-nav-btn {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+            background: rgba(228,228,231,0.55);
+            color: var(--text);
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                color 0.2s ease,
+                background 0.2s ease,
+                opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .year-nav-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .year-nav-btn:hover {
+            transform: translateY(-1px);
+            color: var(--accent);
+        }
+
+        .year-nav-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /*
+           IMPORTANT:
+           This remains a real scroll container on ALL view sizes.
+           Mobile no longer turns it into overflow:visible.
+        */
+        .cert-scroll-box {
+            position: relative;
+            width: 100%;
+            min-width: 0;
+            height: clamp(410px, calc(100vh - 490px), 2060px);
+            max-height: 2060px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: var(--radius-lg);
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            overscroll-behavior: auto;
+            touch-action: none;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,0,0,0.25) transparent;
+        }
+
+        .cert-scroll-box.dragging {
+            cursor: grabbing;
+        }
+
+        .cert-scroll-box::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        .cert-scroll-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .cert-scroll-box::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.22);
+            border-radius: 999px;
+            border: 2px solid #fff;
+        }
+
+        .cert-track {
+            padding: 8px 0;
+        }
+
+        .cert-tl {
+            position: relative;
+            margin-left: 18px;
+            padding-left: 34px;
+        }
+
+        .cert-tl::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            display: block;
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--indigo),
+                    var(--cyan),
+                    var(--rose),
+                    transparent
+                );
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .year-block {
+            position: relative;
+            z-index: 1;
+        }
+
+        .year-heading {
+            position: relative;
+            padding: 5px 0;
+            margin-top: 32px;
+            margin-bottom: 0;
+            scroll-margin-top: 8px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: default;
+            user-select: none;
+            display: inline-block;
+            pointer-events: none;
+        }
+
+        .year-block:first-child .year-heading {
+            margin-top: 0;
+        }
+
+        .year-heading::before {
+            content: "";
+            position: absolute;
+            left: -42px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--grad);
+            box-shadow:
+                0 0 0 4px var(--bg),
+                0 0 14px rgba(108,99,255,0.45);
+            z-index: 2;
+        }
+
+        .year-cards {
+            padding-top: 20px;
+            padding-bottom: 8px;
+        }
+
+        .cert-card-item {
+            margin-bottom: 20px;
+        }
+
+        .cert-card-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 950px) {
+            .journey-grid {
+                grid-template-columns: 1fr;
+                gap: 70px;
+            }
+
+            /*
+               Sticky isn't needed once the columns stack,
+               but the internal certificate scroller IS retained.
+            */
+            .cert-sticky-wrap {
+                position: relative;
+                top: 0;
+            }
+
+            /*
+               Do NOT set overflow:visible here.
+               JS gives this box the proper scrollable height.
+            */
+            .cert-scroll-box {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .experience-section {
+                padding: 80px 24px;
+            }
+
+            .section-header {
+                display: block;
+                margin-bottom: 50px;
+            }
+
+            .section-description {
+                margin-top: 20px;
+            }
+
+            .timeline {
+                margin-left: 10px;
+                padding-left: 27px;
+            }
+
+            .timeline-node {
+                left: -35px;
+            }
+
+            .journey-card {
+                padding: 20px;
+            }
+
+            .card-top {
+                display: block;
+            }
+
+            .date-badge {
+                display: inline-block;
+                margin-top: 10px;
+            }
+
+            .cert-tl {
+                margin-left: 10px;
+                padding-left: 27px;
+            }
+
+            .year-heading::before {
+                left: -35px;
+            }
+
+            /*
+               Keep the year navigation usable on narrow screens.
+            */
+            .year-nav {
+                grid-template-columns: auto minmax(0, 1fr) auto;
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .year-nav-btn {
+                padding: 7px 8px;
+                gap: 4px;
+            }
+
+            .year-pill {
+                padding: 5px 8px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+
+            .cert-scroll-box {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* =========================================================
+           MEDIA VIEWER
+        ========================================================= */
+
+        .mv {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+        }
+
+        .mv.open {
+            display: grid;
+            place-items: center;
+        }
+
+        .mv-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .mv-dialog {
+            position: relative;
+            width: min(1120px, calc(100% - 28px));
+            height: min(780px, calc(100% - 28px));
+            max-width: calc(100vw - 28px);
+            max-height: calc(100vh - 28px);
+            border-radius: 18px;
+
+            /* Fully white */
+            background: #ffffff;
+
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.22);
+
+            overflow: hidden;
+
+            /*
+               Controls need their zoom menu to layer above body content.
+            */
+            display: grid;
+            grid-template-rows: auto minmax(0,1fr) auto;
+            color: #111;
+        }
+
+        @media (max-width: 700px) {
+            .mv-dialog {
+                width: calc(100% - 18px);
+                height: calc(100% - 18px);
+                max-width: calc(100vw - 18px);
+                max-height: calc(100vh - 18px);
+                border-radius: 16px;
+            }
+        }
+
+        .mv-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 30;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.10);
+            background: #ffffff;
+            color: #111;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+        }
+
+        .mv-close:focus,
+        .mv-close:focus-visible {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .mv-header {
+            position: relative;
+            z-index: 20;
+            padding: 16px 60px 12px 18px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 58px;
+            background: #ffffff;
+        }
+
+        .mv-title {
+            font-family: "Manrope", sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            font-size: 14px;
+            color: #111;
+            line-height: 1.25;
+        }
+
+        .mv-subtitle {
+            margin-top: 2px;
+            font-size: 11px;
+            color: rgba(0,0,0,0.55);
+            font-weight: 700;
+        }
+
+        .mv-body {
+            position: relative;
+            min-height: 0;
+            overflow: hidden;
+            background: #f7f7f8;
+            z-index: 1;
+        }
+
+        .mv-stage {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            user-select: none;
+            touch-action: none;
+            overflow: hidden;
+        }
+
+        .mv-img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: auto;
+            height: auto;
+            max-width: none;
+            max-height: none;
+            transform: translate(-50%,-50%);
+            transform-origin: center center;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-drag: none;
+            cursor: default;
+        }
+
+        .mv.zoomed .mv-img {
+            cursor: grab;
+        }
+
+        .mv.dragging .mv-img {
+            cursor: grabbing;
+        }
+
+        .mv-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 8;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.10);
+            background: #ffffff;
+            color: #111;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+        }
+
+        .mv-arrow:focus,
+        .mv-arrow:focus-visible {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .mv-arrow.prev {
+            left: 12px;
+        }
+
+        .mv-arrow.next {
+            right: 12px;
+        }
+
+        .mv-arrow:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(0.98);
+        }
+
+        .mv-arrow.hidden {
+            display: none;
+        }
+
+        /* =========================================================
+           THUMBNAIL BAR
+
+           Left -> right.
+           If width runs out -> next row underneath.
+           If rows become too tall -> vertical scrollbar only.
+        ========================================================= */
+
+        .mv-thumbs {
+            position: absolute;
+            left: 50%;
+            bottom: 14px;
+            transform: translate(-50%, 110%);
+            z-index: 12;
+
+            padding: 10px;
+            border-radius: 16px;
+
+            /* Fully white */
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.12);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.14);
+
+            /*
+               Horizontal arrangement first, then wrapping below.
+            */
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+            align-content: flex-start;
+            gap: 10px;
+
+            width: max-content;
+            max-width: calc(100% - 28px);
+
+            /*
+               If many wrapped rows exist, only vertical scrolling appears.
+            */
+            max-height: min(180px, 45%);
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,0,0,0.25) transparent;
+        }
+
+        .mv-thumbs::-webkit-scrollbar {
+            width: 9px;
+            height: 0;
+        }
+
+        .mv-thumbs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .mv-thumbs::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.22);
+            border-radius: 999px;
+            border: 2px solid #fff;
+        }
+
+        .mv.show-thumbs .mv-thumbs {
+            transform: translate(-50%, 0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mv-thumb {
+            position: relative;
+            width: 86px;
+            height: 62px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid transparent;
+            background: #f4f4f5;
+            cursor: pointer;
+            flex: 0 0 86px;
+        }
+
+        .mv-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mv-thumb.active {
+            border-color: rgba(var(--accent-rgb), 0.55);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.16);
+        }
+
+        @media (max-width: 700px) {
+            .mv-thumbs {
+                max-width: calc(100% - 18px);
+                max-height: min(190px, 42%);
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .mv-thumb {
+                width: 72px;
+                height: 52px;
+                flex-basis: 72px;
+            }
+        }
+
+        /* =========================================================
+           CONTROLS
+        ========================================================= */
+
+        .mv-controls {
+            position: relative;
+            z-index: 50;
+
+            padding: 12px 14px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 10px;
+            align-items: center;
+
+            background: #ffffff;
+
+            /*
+               Important: menu must be able to rise above the body.
+            */
+            overflow: visible;
+        }
+
+        @media (max-width: 700px) {
+            .mv-controls {
+                grid-template-columns: auto 1fr auto;
+                grid-template-rows: auto auto;
+            }
+
+            .mv-controls .mv-pct {
+                grid-column: 1 / -1;
+            }
+        }
+
+        .mv-ctl-btn {
+            height: 40px;
+            padding: 0 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.10);
+            background: #ffffff;
+            color: #111;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .mv-ctl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .mv-ctl-btn:focus,
+        .mv-ctl-btn:focus-visible {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .mv-ctl-btn svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .mv-range {
+            width: 100%;
+            height: 40px;
+            display: grid;
+            align-items: center;
+            padding: 0 4px;
+        }
+
+        .mv-range input[type="range"] {
+            width: 100%;
+            appearance: none;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(var(--accent-rgb), 0.22);
+            outline: none;
+        }
+
+        .mv-range input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15);
+            cursor: pointer;
+            border: 0;
+        }
+
+        .mv-range input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15);
+            cursor: pointer;
+            border: 0;
+        }
+
+        .mv-pct {
+            position: relative;
+            z-index: 100;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.10);
+
+            /* Fully white */
+            background: #ffffff;
+
+            display: grid;
+            grid-template-columns: 1fr auto;
+            overflow: visible;
+        }
+
+        .mv-pct input {
+            border: 0;
+            outline: 0;
+            background: #ffffff;
+            padding: 0 10px;
+            color: #111;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            width: 100%;
+            border-radius: 12px 0 0 12px;
+            height: 40px;
+        }
+
+        .mv-pct > button {
+            width: 40px;
+            border: 0;
+            border-left: 1px solid rgba(0,0,0,0.10);
+            background: #ffffff;
+            color: #111;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            border-radius: 0 12px 12px 0;
+            height: 40px;
+        }
+
+        .mv-pct button:focus,
+        .mv-pct button:focus-visible,
+        .mv-pct input:focus,
+        .mv-pct input:focus-visible {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* =========================================================
+           ZOOM PRESET POPUP
+           Solid white and layered above everything.
+        ========================================================= */
+
+        .mv-menu {
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + 10px);
+
+            width: 190px;
+            max-height: 305px;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.12);
+
+            /* absolutely no transparency */
+            background: #ffffff !important;
+            opacity: 1 !important;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.24);
+            padding: 8px;
+
+            display: none;
+
+            /*
+               Full top layer in the viewer.
+            */
+            z-index: 2147483647;
+            isolation: isolate;
+        }
+
+        .mv-menu.open {
+            display: block;
+        }
+
+        .mv-menu button {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            border: 0;
+            background: #ffffff;
+            color: #111;
+            cursor: pointer;
+            padding: 9px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 900;
+            text-align: left;
+        }
+
+        .mv-menu button:hover,
+        .mv-menu button.active {
+            background: #eef0ff;
+            color: var(--accent);
+        }
+
+        .mv-status {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,0,0,0.10);
+            background: #ffffff;
+            color: rgba(0,0,0,0.60);
+            font-size: 11px;
+            font-weight: 900;
+            z-index: 15;
+        }
+    </style>
+</head>
+
+<body>
+
+<section id="experience" class="experience-section" aria-labelledby="experience-title">
+
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <div class="container">
+
+        <header class="section-header">
+            <div class="reveal">
+                <p class="eyebrow">Academic & Professional Journey</p>
+                <h2 id="experience-title" class="section-title">Education & Certifications</h2>
+            </div>
+        </header>
+
+        <div class="journey-grid" id="journeyGrid">
+
+            <!-- =================== EDUCATION =================== -->
+            <div class="edu-column" id="eduColumn">
+
+                <div class="column-header reveal">
+                    <div class="column-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M3 6.5A2.5 2.5 0 015.5 4H11a2 2 0 012 2v14a2 2 0 00-2-2H5.5A2.5 2.5 0 013 15.5v-9z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 6.5A2.5 2.5 0 0018.5 4H13a2 2 0 00-2 2v14a2 2 0 012-2h5.5A2.5 2.5 0 0021 15.5v-9z" />
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h3 class="column-title">Education</h3>
+                        <p class="column-subtitle">Academic background</p>
+                    </div>
+                </div>
+
+                <div class="edu-scroll-box" id="eduScrollBox">
+                    <div class="timeline">
+
+                    <article class="timeline-item reveal delay-1">
+                        <div class="timeline-node"></div>
+
+                        <div class="journey-card">
+                            <div class="card-top">
+                                <div>
+                                    <h4 class="card-title">Pearson BTEC Level 5 HND in Computing(RQF)</h4>
+                                    <p class="card-subtitle">Computing</p>
+                                </div>
+
+                                <span class="date-badge">Sep 2025 – Present</span>
+                            </div>
+
+                            <div class="organization">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M2 8l10-5 10 5-10 5L2 8z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M6 10.5v5.2c0 .7.4 1.4 1 1.7 1.6.9 3.4 1.4 5 1.4s3.4-.5 5-1.4c.6-.3 1-.9 1-1.7v-5.2" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M22 8v6" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M23 14a1 1 0 11-2 0 1 1 0 012 0z" />
+                                </svg>
+
+                                <span>ESOFT Metro Campus</span>
+                            </div>
+
+                            <div class="organization">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M12 21s7-5.1 7-11a7 7 0 10-14 0c0 5.9 7 11 7 11z" />
+                                    <circle cx="12" cy="10.5" r="2.5" stroke-width="2" />
+                                </svg>
+
+                                <span>245, 3 De Fonseka Pl, Colombo 00400</span>
+                            </div>
+
+                            <ul class="card-list">
+                                <li>Active volunteer participating in technical initiatives, workshops, and community events.</li>
+                                <li>Collaborates with fellow students to promote technology awareness, software development practices, and IEEE activities.</li>
+                                <li>Supports event coordination, technical sessions, and student engagement activities.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="timeline-item reveal delay-2">
+                        <div class="timeline-node"></div>
+
+                        <div class="journey-card">
+                            <div class="card-top">
+                                <div>
+                                    <h4 class="card-title">Level 3 Diploma in Information Technology</h4>
+                                    <p class="card-subtitle">Information Technology</p>
+                                </div>
+
+                                <span class="date-badge">Apr 2025 – Dec 2025</span>
+                            </div>
+
+                            <div class="organization">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M2 8l10-5 10 5-10 5L2 8z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M6 10.5v5.2c0 .7.4 1.4 1 1.7 1.6.9 3.4 1.4 5 1.4s3.4-.5 5-1.4c.6-.3 1-.9 1-1.7v-5.2" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M22 8v6" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M23 14a1 1 0 11-2 0 1 1 0 012 0z" />
+                                </svg>
+
+                                <span>ESOFT Metro Campus</span>
+                            </div>
+
+                            <div class="organization">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M12 21s7-5.1 7-11a7 7 0 10-14 0c0 5.9 7 11 7 11z" />
+                                    <circle cx="12" cy="10.5" r="2.5" stroke-width="2" />
+                                </svg>
+
+                                <span>245, 3 De Fonseka Pl, Colombo 00400</span>
+                            </div>
+
+                            <ul class="card-list">
+                                <li>Handled customer service operations and front-desk client communication.</li>
+                                <li>Assisted with daily banking operational tasks and branch workflow management.</li>
+                                <li>Completed corporate training covering banking systems, financial operations, and service standards.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="timeline-item reveal delay-2">
+                        <div class="timeline-node"></div>
+
+                        <div class="journey-card">
+                            <div class="card-top">
+                                <div>
+                                    <h4 class="card-title">Secondary Education</h4>
+                                    <p class="card-subtitle">General Education</p>
+                                </div>
+
+                                <span class="date-badge">Jan 2014 – Mar 2025</span>
+                            </div>
+
+                            <div class="organization">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M2 8l10-5 10 5-10 5L2 8z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M6 10.5v5.2c0 .7.4 1.4 1 1.7 1.6.9 3.4 1.4 5 1.4s3.4-.5 5-1.4c.6-.3 1-.9 1-1.7v-5.2" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M22 8v6" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M23 14a1 1 0 11-2 0 1 1 0 012 0z" />
+                                </svg>
+
+                                <span>D.S. Senanayake College | Colombo 7</span>
+                            </div>
+
+                            <div class="organization">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M12 21s7-5.1 7-11a7 7 0 10-14 0c0 5.9 7 11 7 11z" />
+                                    <circle cx="12" cy="10.5" r="2.5" stroke-width="2" />
+                                </svg>
+
+                                <span>07, 62 8 R.G. Senanayake Mawatha, Colombo 00700</span>
+                            </div>
+
+                            <ul class="card-list">
+                                <li>Handled customer service operations and front-desk client communication.</li>
+                                <li>Assisted with daily banking operational tasks and branch workflow management.</li>
+                                <li>Completed corporate training covering banking systems, financial operations, and service standards.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- =================== CERTIFICATIONS =================== -->
+            <div class="cert-column" id="certColumn">
+                <div class="cert-sticky-wrap" id="certStickyWrap">
+
+                    <div class="column-header reveal delay-1" id="certHeader">
+                        <div class="column-icon">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h3 class="column-title">Certifications</h3>
+                            <p class="column-subtitle">Certifications & qualifications</p>
+                        </div>
+                    </div>
+
+                    <div class="year-nav" id="yearNav" aria-label="Certification year navigation">
+
+                        <button class="year-nav-btn" id="yearPrev" type="button" aria-label="Previous year">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Prev
+                        </button>
+
+                        <div class="year-nav-years" id="yearNavYears" aria-label="Years"></div>
+
+                        <button class="year-nav-btn" id="yearNext" type="button" aria-label="Next year">
+                            Next
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+
+                    </div>
+
+                    <div class="cert-scroll-box" id="certScrollBox">
+                        <div class="cert-track" id="certTrack">
+                            <div class="cert-tl">
+
+                                <!-- 2026 -->
+                                <div class="year-block" data-year-idx="0">
+
+                                    <div class="year-heading">2026</div>
+
+                                    <div class="year-cards">
+
+                                        <div class="cert-card-item reveal delay-1">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Pearson BTEC Level 5 HND in Computing(RQF)</h4>
+                                                        <p class="card-subtitle">Computing</p>
+                                                    </div>
+
+                                                    <span class="date-badge">2025 – Present</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag accent">Computing</span>
+                                                    <span class="tag">Software Development</span>
+                                                    <span class="tag">Cybersecurity</span>
+                                                    <span class="tag">Data Analytics</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Developing practical and theoretical knowledge across programming, databases, networking, cybersecurity, software engineering, and professional computing practices.
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- 2025 -->
+                                <div class="year-block" data-year-idx="1">
+
+                                    <div class="year-heading">2025</div>
+
+                                    <div class="year-cards">
+
+                                        <div class="cert-card-item reveal delay-3">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Java Programming Masterclass</h4>
+                                                        <p class="card-subtitle">Udemy · Programming Certification</p>
+                                                    </div>
+
+                                                    <span class="date-badge">Aug 2026</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag">Java</span>
+                                                    <span class="tag">4.5 Hours</span>
+                                                    <span class="tag accent">Udemy</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Completed a comprehensive Java programming masterclass focused on building a strong foundation in Java and progressing toward advanced programming concepts.
+                                                </p>
+
+                                                <div class="certificate-footer">
+
+                                                    <a
+                                                        href="https://ude.my/UC-d34ce1ca-97f7-48e2-add3-bad6bc1ae277"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="button button-secondary"
+                                                    >
+                                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                                        </svg>
+
+                                                        Verify Credential
+
+                                                        <svg class="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                                        </svg>
+                                                    </a>
+
+                                                    <button
+                                                        type="button"
+                                                        class="button button-primary js-open-viewer"
+                                                        data-viewer-kind="doc"
+                                                        data-viewer-title="Java Programming Masterclass"
+                                                        data-viewer-base="assets/img/certificates/sample1/doc/"
+                                                        data-viewer-ext="png"
+                                                        data-viewer-max="25"
+                                                        data-viewer-images="1,2"
+                                                    >
+                                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                        </svg>
+
+                                                        View Certificate
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        class="button button-primary js-open-viewer"
+                                                        data-viewer-kind="gallery"
+                                                        data-viewer-title="Java Programming Masterclass"
+                                                        data-viewer-base="assets/img/certificates/sample1/gallery/"
+                                                        data-viewer-ext="png"
+                                                        data-viewer-max="25"
+                                                        data-viewer-images="1"
+                                                    >
+                                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                        </svg>
+
+                                                        View Gallery
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="cert-card-item reveal delay-4">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Programming Masterclass</h4>
+                                                        <p class="card-subtitle">Udemy · Programming Certification</p>
+                                                    </div>
+
+                                                    <span class="date-badge">Aug 2026</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag">Java</span>
+                                                    <span class="tag">6.5 Hours</span>
+                                                    <span class="tag accent">Udemy</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Extended programming masterclass building deeper object-oriented programming knowledge with hands-on practical exercises and real-world project work.
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- 2023 -->
+                                <div class="year-block" data-year-idx="2">
+
+                                    <div class="year-heading">2024</div>
+
+                                    <div class="year-cards">
+
+                                        <div class="cert-card-item reveal delay-3">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Java Programming Masterclass</h4>
+                                                        <p class="card-subtitle">Udemy · Programming Certification</p>
+                                                    </div>
+
+                                                    <span class="date-badge">Aug 2027</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag">Java</span>
+                                                    <span class="tag">4.5 Hours</span>
+                                                    <span class="tag accent">Udemy</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Completed a comprehensive Java programming masterclass focused on building a strong foundation in Java and progressing toward advanced programming concepts.
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="cert-card-item reveal delay-4">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Programming Masterclass</h4>
+                                                        <p class="card-subtitle">Udemy · Programming Certification</p>
+                                                    </div>
+
+                                                    <span class="date-badge">Aug 2027</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag">Java</span>
+                                                    <span class="tag">6.5 Hours</span>
+                                                    <span class="tag accent">Udemy</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Extended programming masterclass building deeper object-oriented programming knowledge with hands-on practical exercises and real-world project work.
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- 2023 -->
+                                <div class="year-block" data-year-idx="2">
+
+                                    <div class="year-heading">2023</div>
+
+                                    <div class="year-cards">
+
+                                        <div class="cert-card-item reveal delay-3">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Java Programming Masterclass</h4>
+                                                        <p class="card-subtitle">Udemy · Programming Certification</p>
+                                                    </div>
+
+                                                    <span class="date-badge">Aug 2027</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag">Java</span>
+                                                    <span class="tag">4.5 Hours</span>
+                                                    <span class="tag accent">Udemy</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Completed a comprehensive Java programming masterclass focused on building a strong foundation in Java and progressing toward advanced programming concepts.
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="cert-card-item reveal delay-4">
+                                            <div class="journey-card">
+
+                                                <div class="card-top">
+                                                    <div>
+                                                        <h4 class="card-title">Programming Masterclass</h4>
+                                                        <p class="card-subtitle">Udemy · Programming Certification</p>
+                                                    </div>
+
+                                                    <span class="date-badge">Aug 2027</span>
+                                                </div>
+
+                                                <div class="tags">
+                                                    <span class="tag">Java</span>
+                                                    <span class="tag">6.5 Hours</span>
+                                                    <span class="tag accent">Udemy</span>
+                                                </div>
+
+                                                <p class="card-description">
+                                                    Extended programming masterclass building deeper object-oriented programming knowledge with hands-on practical exercises and real-world project work.
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     MEDIA VIEWER POPUP
+========================================================= -->
+
+<div class="mv" id="mv" aria-hidden="true">
+
+    <div class="mv-backdrop" id="mvBackdrop"></div>
+
+    <div class="mv-dialog" role="dialog" aria-modal="true" aria-labelledby="mvTitle">
+
+        <button class="mv-close" id="mvClose" type="button" aria-label="Close">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <div class="mv-header">
+            <div>
+                <div class="mv-title" id="mvTitle">Viewer</div>
+                <div class="mv-subtitle" id="mvMeta">Zoom, pan</div>
+            </div>
+        </div>
+
+        <div class="mv-body" id="mvBody">
+
+            <div class="mv-status" id="mvStatus" style="display:none;">
+                Loading…
+            </div>
+
+            <button class="mv-arrow prev hidden" id="mvPrev" type="button" aria-label="Previous image">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+
+            <button class="mv-arrow next hidden" id="mvNext" type="button" aria-label="Next image">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+
+            <div class="mv-stage" id="mvStage">
+                <img class="mv-img" id="mvImg" alt="">
+            </div>
+
+            <div class="mv-thumbs" id="mvThumbs" aria-label="Thumbnails"></div>
+
+        </div>
+
+        <div class="mv-controls">
+
+            <button class="mv-ctl-btn" id="mvZoomOut" type="button" aria-label="Zoom out">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M20 12H4"/>
+                </svg>
+
+                Zoom out
+            </button>
+
+            <!--
+                100 is now the absolute minimum.
+                100% = default fitted image.
+            -->
+            <div class="mv-range" aria-label="Zoom slider">
+                <input
+                    id="mvRange"
+                    type="range"
+                    min="100"
+                    max="800"
+                    step="1"
+                    value="100"
+                >
+            </div>
+
+            <button class="mv-ctl-btn" id="mvZoomIn" type="button" aria-label="Zoom in">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 4v16m8-8H4"/>
+                </svg>
+
+                Zoom in
+            </button>
+
+            <div class="mv-pct" id="mvPct">
+
+                <input
+                    id="mvPctInput"
+                    type="text"
+                    inputmode="numeric"
+                    value="100%"
+                    aria-label="Zoom percentage"
+                >
+
+                <button id="mvPctToggle" type="button" aria-label="Zoom presets">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+
+                <div class="mv-menu" id="mvMenu" aria-label="Zoom menu"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   1. REVEAL
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const els = document.querySelectorAll(".reveal");
+
+    if (!("IntersectionObserver" in window)) {
+        els.forEach(e => e.classList.add("visible"));
+        return;
+    }
+
+    const io = new IntersectionObserver((entries, obs) => {
+
+        entries.forEach(en => {
+
+            if (!en.isIntersecting) return;
+
+            en.target.classList.add("visible");
+            obs.unobserve(en.target);
+
+        });
+
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+    });
+
+    els.forEach(e => io.observe(e));
+
+});
+
+
+/* =========================================================
+   2. EDUCATION DRAG GESTURE
+
+   The timeline can be dragged vertically from non-interactive content.
+   Links and controls remain usable and keep the browser's default cursor.
+========================================================= */
+
+(function initEducationDrag() {
+
+    const scrollBox =
+        document.getElementById("eduScrollBox");
+
+    if (!scrollBox) return;
+
+    let eduDrag = null;
+
+    function endEduDrag(e) {
+
+        if (
+            !eduDrag ||
+            eduDrag.pointerId !== e.pointerId
+        ) {
+            return;
+        }
+
+        try {
+            scrollBox.releasePointerCapture(
+                e.pointerId
+            );
+        } catch (_) {}
+
+        eduDrag = null;
+        scrollBox.classList.remove(
+            "dragging"
+        );
+    }
+
+    scrollBox.addEventListener(
+        "pointerdown",
+        (e) => {
+
+            if (e.button !== 0) return;
+
+            const target =
+                e.target.closest(
+                    "button, a, input, select, textarea"
+                );
+
+            if (target) return;
+
+            eduDrag = {
+                pointerId: e.pointerId,
+                y: e.clientY,
+                scrollTop: scrollBox.scrollTop
+            };
+
+            scrollBox.setPointerCapture(
+                e.pointerId
+            );
+
+            scrollBox.classList.add(
+                "dragging"
+            );
+
+            e.preventDefault();
+        }
+    );
+
+    scrollBox.addEventListener(
+        "pointermove",
+        (e) => {
+
+            if (
+                !eduDrag ||
+                eduDrag.pointerId !== e.pointerId
+            ) {
+                return;
+            }
+
+            const dy =
+                e.clientY - eduDrag.y;
+
+            if (Math.abs(dy) > 3) {
+                scrollBox.scrollTop =
+                    eduDrag.scrollTop - dy;
+            }
+
+            e.preventDefault();
+        }
+    );
+
+    scrollBox.addEventListener(
+        "pointerup",
+        endEduDrag
+    );
+
+    scrollBox.addEventListener(
+        "pointercancel",
+        endEduDrag
+    );
+
+})();
+
+/* =========================================================
+   3. CERTIFICATION SCROLLER
+
+   Rules:
+   - Works on desktop, tablet and mobile.
+   - Every selected year goes to the TOP.
+   - Last year ALSO goes to the TOP.
+   - Enough bottom room is added so the last heading can actually reach top.
+   - The viewport is at least as tall as the last year itself, so all last-year
+     cards can be shown.
+========================================================= */
+
+(function initCert() {
+
+    const eduCol =
+        document.getElementById("eduColumn");
+
+    const certHdr =
+        document.getElementById("certHeader");
+
+    const yearNav =
+        document.getElementById("yearNav");
+
+    const scrollBox =
+        document.getElementById("certScrollBox");
+
+    const track =
+        document.getElementById("certTrack");
+
+    const yearPrev =
+        document.getElementById("yearPrev");
+
+    const yearNext =
+        document.getElementById("yearNext");
+
+    const yearNavBox =
+        document.getElementById("yearNavYears");
+
+    if (
+        !eduCol ||
+        !certHdr ||
+        !yearNav ||
+        !scrollBox ||
+        !track ||
+        !yearPrev ||
+        !yearNext ||
+        !yearNavBox
+    ) {
+        return;
+    }
+
+    let blocks = [];
+    let activeIdx = 0;
+
+    let syncing = false;
+    let resizeFrame = 0;
+    let certDrag = null;
+
+    function gather() {
+
+        blocks = [];
+
+        track
+            .querySelectorAll(".year-block")
+            .forEach((b, idx) => {
+
+                const heading =
+                    b.querySelector(".year-heading");
+
+                const yearText =
+                    heading
+                        ? heading.textContent.trim()
+                        : `Year ${idx + 1}`;
+
+                blocks.push({
+                    el: b,
+                    heading,
+                    yearText,
+                    idx
+                });
+
+            });
+    }
+
+    function outerHeight(el) {
+
+        if (!el) return 0;
+
+        const rect =
+            el.getBoundingClientRect();
+
+        const cs =
+            getComputedStyle(el);
+
+        return (
+            rect.height +
+            (parseFloat(cs.marginTop) || 0) +
+            (parseFloat(cs.marginBottom) || 0)
+        );
+    }
+
+    function offsetInScrollBox(el) {
+
+        const boxRect =
+            scrollBox.getBoundingClientRect();
+
+        const elRect =
+            el.getBoundingClientRect();
+
+        return (
+            elRect.top -
+            boxRect.top +
+            scrollBox.scrollTop
+        );
+    }
+
+    /*
+       Target the heading itself, not its enclosing year block. This keeps
+       every year aligned to the top and makes the final year reachable even
+       when its block has a larger margin or different content height.
+    */
+    function getDestTop(el) {
+
+        const heading =
+            el.querySelector(".year-heading");
+
+        if (!heading) return 0;
+
+        return Math.max(
+            0,
+            offsetInScrollBox(heading) - 8
+        );
+    }
+
+    function maxScrollTop() {
+        return Math.max(
+            0,
+            scrollBox.scrollHeight -
+            scrollBox.clientHeight
+        );
+    }
+
+    function scrollToTop(dest, selectedIdx) {
+
+        const selected =
+            blocks[selectedIdx];
+
+        const heading =
+            selected && selected.heading;
+
+        if (!heading) return;
+
+        const target =
+            Math.max(
+                0,
+                Math.min(dest, maxScrollTop())
+            );
+
+        scrollBox.scrollTo({
+            top: target,
+            behavior: "auto"
+        });
+    }
+
+    /*
+       ALL years target their own exact heading position.
+    */
+    function destinationForYear(idx) {
+
+        const b =
+            blocks[idx];
+
+        if (!b) return 0;
+
+        return getDestTop(b.el);
+    }
+
+    function scrollToYear(idx) {
+
+        const b =
+            blocks[idx];
+
+        if (!b) return;
+
+        /*
+           Bottom spacer has already made this destination reachable.
+        */
+        const dest =
+            destinationForYear(idx);
+
+        scrollToTop(dest, idx);
+    }
+
+    function buildYearNav() {
+
+        yearNavBox.innerHTML = "";
+
+        blocks.forEach((b, idx) => {
+
+            const btn =
+                document.createElement("button");
+
+            btn.type = "button";
+            btn.className = "year-pill";
+            btn.textContent = b.yearText;
+
+            btn.addEventListener("click", () => {
+
+                setActiveNav(idx);
+                scrollToYear(idx);
+
+            });
+
+            yearNavBox.appendChild(btn);
+
+        });
+    }
+
+    function setActiveNav(idx) {
+
+        if (!blocks.length) return;
+
+        activeIdx =
+            Math.max(
+                0,
+                Math.min(
+                    idx,
+                    blocks.length - 1
+                )
+            );
+
+        const pills =
+            yearNavBox.querySelectorAll(
+                ".year-pill"
+            );
+
+        pills.forEach((p, i) => {
+
+            p.classList.toggle(
+                "active",
+                i === activeIdx
+            );
+
+        });
+
+        yearPrev.disabled =
+            activeIdx === 0;
+
+        yearNext.disabled =
+            activeIdx === blocks.length - 1;
+    }
+
+    function detectActiveYear() {
+
+        if (!blocks.length) return;
+
+        const st =
+            scrollBox.scrollTop;
+
+        let idx = 0;
+
+        /*
+           Small tolerance means a heading is considered active as it reaches
+           the top of the certificate viewport.
+        */
+        const threshold = 40;
+
+        for (
+            let i = 0;
+            i < blocks.length;
+            i++
+        ) {
+
+            const top =
+                destinationForYear(i);
+
+            if (
+                top <=
+                st + threshold
+            ) {
+                idx = i;
+            }
+        }
+
+        if (idx !== activeIdx) {
+            setActiveNav(idx);
+        }
+    }
+
+    /* Keep certificate sizing independent while matching its CSS zoom scaling. */
+    function calculateViewportHeight() {
+        const viewportHeight =
+            window.visualViewport
+                ? window.visualViewport.height
+                : window.innerHeight;
+
+        return Math.min(
+            2060,
+            Math.max(
+                410,
+                viewportHeight - 490
+            )
+        );
+    }
+
+    /*
+       Critical last-year calculation.
+
+       To put the final heading at the TOP, scrollTop must equal that heading's
+       own content offset.
+
+       Normally, there isn't enough content below it to permit that much scroll.
+       Therefore add exactly enough bottom padding to make that scroll position
+       reachable.
+
+       Since the viewport is >= final block height, its complete contents
+       remain visible underneath that heading.
+    */
+    function applyLastYearBottomSpace() {
+
+        track.style.paddingBottom =
+            "8px";
+
+        if (!blocks.length) return;
+
+        const last =
+            blocks[
+                blocks.length - 1
+            ];
+
+        const heading =
+            last.heading;
+
+        if (!heading) return;
+
+        const desiredLastTop =
+            getDestTop(last.el);
+
+        const currentPadding =
+            parseFloat(
+                getComputedStyle(track).paddingBottom
+            ) || 8;
+
+        const contentHeight =
+            Math.max(
+                0,
+                scrollBox.scrollHeight -
+                currentPadding
+            );
+
+        const requiredBottomSpace =
+            Math.max(
+                8,
+                desiredLastTop +
+                scrollBox.clientHeight -
+                contentHeight +
+                8
+            );
+
+        track.style.paddingBottom =
+            requiredBottomSpace + "px";
+    }
+
+    function syncSizes() {
+
+        if (syncing) return;
+
+        syncing = true;
+
+        /*
+           Reset first so measurements don't include our previous spacer.
+        */
+        track.style.paddingBottom =
+            "8px";
+
+        const boxH =
+            calculateViewportHeight();
+
+        scrollBox.style.height =
+            Math.ceil(boxH) + "px";
+
+        /*
+           Now create just enough bottom room for last year -> top.
+        */
+        applyLastYearBottomSpace();
+
+        /*
+           Preserve legal scroll position after device rotation / browser zoom.
+        */
+        if (
+            scrollBox.scrollTop >
+            maxScrollTop()
+        ) {
+            scrollBox.scrollTop =
+                maxScrollTop();
+        }
+
+        detectActiveYear();
+
+        syncing = false;
+    }
+
+    function scheduleSync() {
+
+        cancelAnimationFrame(
+            resizeFrame
+        );
+
+        resizeFrame =
+            requestAnimationFrame(() => {
+                syncSizes();
+            });
+    }
+
+    yearPrev.addEventListener(
+        "click",
+        () => {
+
+            const nextIdx =
+                Math.max(
+                    0,
+                    activeIdx - 1
+                );
+
+            setActiveNav(nextIdx);
+            scrollToYear(nextIdx);
+
+        }
+    );
+
+    yearNext.addEventListener(
+        "click",
+        () => {
+
+            const nextIdx =
+                Math.min(
+                    blocks.length - 1,
+                    activeIdx + 1
+                );
+
+            setActiveNav(nextIdx);
+            scrollToYear(nextIdx);
+
+        }
+    );
+
+    scrollBox.addEventListener(
+        "scroll",
+        () => detectActiveYear(),
+        { passive: true }
+    );
+
+    /*
+       Internal drag gesture for the certificate section.
+       It works with mouse, touch, and pen while preserving native
+       scrolling for the rest of the page.
+    */
+    scrollBox.addEventListener(
+        "pointerdown",
+        (e) => {
+
+            if (e.button !== 0) return;
+
+            const target =
+                e.target.closest(
+                    "button, a, input, select, textarea"
+                );
+
+            if (target) return;
+
+            certDrag = {
+                pointerId: e.pointerId,
+                x: e.clientX,
+                y: e.clientY,
+                scrollTop: scrollBox.scrollTop
+            };
+
+            scrollBox.setPointerCapture(
+                e.pointerId
+            );
+            scrollBox.classList.add(
+                "dragging"
+            );
+            e.preventDefault();
+        }
+    );
+
+    scrollBox.addEventListener(
+        "pointermove",
+        (e) => {
+
+            if (
+                !certDrag ||
+                certDrag.pointerId !== e.pointerId
+            ) {
+                return;
+            }
+
+            const dx =
+                e.clientX - certDrag.x;
+
+            const dy =
+                e.clientY - certDrag.y;
+
+            if (
+                Math.abs(dy) > 3 &&
+                Math.abs(dy) > Math.abs(dx)
+            ) {
+                scrollBox.scrollTop =
+                    certDrag.scrollTop - dy;
+            }
+
+            e.preventDefault();
+        }
+    );
+
+    function endCertDrag(e) {
+
+        if (
+            !certDrag ||
+            certDrag.pointerId !== e.pointerId
+        ) {
+            return;
+        }
+
+        try {
+            scrollBox.releasePointerCapture(
+                e.pointerId
+            );
+        } catch (_) {}
+
+        certDrag = null;
+        scrollBox.classList.remove(
+            "dragging"
+        );
+    }
+
+    scrollBox.addEventListener(
+        "pointerup",
+        endCertDrag
+    );
+
+    scrollBox.addEventListener(
+        "pointercancel",
+        endCertDrag
+    );
+
+    /*
+       Desktop mouse wheel chaining.
+    */
+    scrollBox.addEventListener(
+        "wheel",
+        (e) => {
+
+            const atTop =
+                scrollBox.scrollTop <= 0;
+
+            const atBottom =
+                scrollBox.scrollTop +
+                scrollBox.clientHeight >=
+                scrollBox.scrollHeight - 1;
+
+            if (
+                (atTop && e.deltaY < 0) ||
+                (atBottom && e.deltaY > 0)
+            ) {
+
+                e.preventDefault();
+
+                window.scrollBy({
+                    top: e.deltaY,
+                    left: 0,
+                    behavior: "auto"
+                });
+            }
+
+        },
+        { passive: false }
+    );
+
+    /*
+       Mobile:
+       Native touch scrolling is intentionally retained.
+       We DO NOT call preventDefault() during touchmove.
+       This is more reliable on iOS Safari and Android Chrome.
+    */
+
+    gather();
+    buildYearNav();
+    setActiveNav(0);
+
+    requestAnimationFrame(
+        syncSizes
+    );
+
+    window.addEventListener(
+        "load",
+        scheduleSync
+    );
+
+    window.addEventListener(
+        "resize",
+        scheduleSync
+    );
+
+    window.addEventListener(
+        "orientationchange",
+        () => {
+            setTimeout(
+                scheduleSync,
+                100
+            );
+        }
+    );
+
+    if (window.visualViewport) {
+
+        window.visualViewport.addEventListener(
+            "resize",
+            scheduleSync
+        );
+    }
+
+    if ("ResizeObserver" in window) {
+
+        const ro =
+            new ResizeObserver(() => {
+                scheduleSync();
+            });
+
+        ro.observe(eduCol);
+        ro.observe(track);
+        ro.observe(yearNav);
+        ro.observe(certHdr);
+    }
+
+})();
+
+
+/* =========================================================
+   3. MEDIA VIEWER
+
+   Zoom system:
+   100% = fitted/default/minimum
+   200% = twice fitted size
+   300% = three times fitted size
+   ...
+   800% maximum
+
+   You can NEVER zoom below fitted/default.
+
+   Thumbnail behavior:
+   - Open image -> visible.
+   - Zoom IN above 100% -> hidden.
+   - Zoom OUT all the way to 100% -> visible.
+   - Single click/tap continues to toggle it.
+   - Pan does not toggle it.
+========================================================= */
+
+(function mediaViewer() {
+
+    const mv =
+        document.getElementById("mv");
+
+    const mvBackdrop =
+        document.getElementById("mvBackdrop");
+
+    const mvClose =
+        document.getElementById("mvClose");
+
+    const mvTitle =
+        document.getElementById("mvTitle");
+
+    const mvMeta =
+        document.getElementById("mvMeta");
+
+    const mvStage =
+        document.getElementById("mvStage");
+
+    const mvImg =
+        document.getElementById("mvImg");
+
+    const mvThumbs =
+        document.getElementById("mvThumbs");
+
+    const mvPrev =
+        document.getElementById("mvPrev");
+
+    const mvNext =
+        document.getElementById("mvNext");
+
+    const mvStatus =
+        document.getElementById("mvStatus");
+
+    const mvZoomOut =
+        document.getElementById("mvZoomOut");
+
+    const mvZoomIn =
+        document.getElementById("mvZoomIn");
+
+    const mvRange =
+        document.getElementById("mvRange");
+
+    const mvPctInput =
+        document.getElementById("mvPctInput");
+
+    const mvPctToggle =
+        document.getElementById("mvPctToggle");
+
+    const mvMenu =
+        document.getElementById("mvMenu");
+
+    /*
+       1 = default fit and absolute minimum.
+    */
+    const USER_ZOOM_MIN = 1;
+    const USER_ZOOM_MAX = 8;
+
+    /*
+       Ordered percentages requested:
+       100%, 200%, 300%, ...
+    */
+    const PRESETS = [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+    ];
+
+    let urls = [];
+    let idx = 0;
+
+    let naturalW = 0;
+    let naturalH = 0;
+
+    let fitScale = 1;
+    let userZoom = 1;
+
+    let offX = 0;
+    let offY = 0;
+
+    let isOpen = false;
+    let resizeFrame = 0;
+    let loadRequestId = 0;
+    let isLoadingImage = false;
+    let hasLoadedFirstImage = false;
+    let thumbnailVisibilityBeforeClose = true;
+
+    const pointers = new Map();
+
+    let pinchStartDist = 0;
+    let pinchStartZoom = 1;
+    let pinchMid = {
+        x: 0,
+        y: 0
+    };
+
+    let dragStart = {
+        x: 0,
+        y: 0,
+        offX: 0,
+        offY: 0
+    };
+
+    let pointerDownPos = {
+        x: 0,
+        y: 0
+    };
+
+    let pointerMoved = false;
+    let isDragging = false;
+
+    let tapTimer = null;
+    let lastTapTime = 0;
+
+    let lastTapPos = {
+        x: 0,
+        y: 0
+    };
+
+    let lastPointerType = "mouse";
+    let clickTimer = null;
+
+    function clamp(n, a, b) {
+        return Math.max(
+            a,
+            Math.min(b, n)
+        );
+    }
+
+    function stageRect() {
+        return mvStage.getBoundingClientRect();
+    }
+
+    function actualScale() {
+        return fitScale * userZoom;
+    }
+
+    function setStatus(text) {
+
+        if (!text) {
+            mvStatus.style.display =
+                "none";
+
+            return;
+        }
+
+        mvStatus.textContent =
+            text;
+
+        mvStatus.style.display =
+            "block";
+    }
+
+    function setThumbsVisible(visible) {
+
+        if (urls.length <= 1) {
+
+            mv.classList.remove(
+                "show-thumbs"
+            );
+
+            return;
+        }
+
+        mv.classList.toggle(
+            "show-thumbs",
+            !!visible && hasLoadedFirstImage
+        );
+    }
+
+    /*
+       Automatic thumbnail rule:
+       zoom > default => hidden
+       zoom == default => visible
+    */
+    function syncThumbsWithZoom() {
+
+        if (urls.length <= 1) {
+            setThumbsVisible(false);
+            return;
+        }
+
+        if (userZoom > 1.001) {
+            setThumbsVisible(false);
+        } else {
+            setThumbsVisible(true);
+        }
+    }
+
+    function updateArrows() {
+
+        const multi =
+            urls.length > 1;
+
+        mvPrev.classList.toggle(
+            "hidden",
+            !multi
+        );
+
+        mvNext.classList.toggle(
+            "hidden",
+            !multi
+        );
+
+        mvPrev.disabled =
+            urls.length === 0 ||
+            idx <= 0;
+
+        mvNext.disabled =
+            urls.length === 0 ||
+            idx >= urls.length - 1;
+
+        mvPrev.setAttribute(
+            "aria-disabled",
+            String(mvPrev.disabled)
+        );
+
+        mvNext.setAttribute(
+            "aria-disabled",
+            String(mvNext.disabled)
+        );
+    }
+
+    function renderThumbs() {
+
+        mvThumbs.innerHTML = "";
+
+        if (urls.length <= 1) {
+
+            setThumbsVisible(false);
+            return;
+        }
+
+        urls.forEach((u, i) => {
+
+            const t =
+                document.createElement(
+                    "button"
+                );
+
+            t.type = "button";
+
+            t.className =
+                "mv-thumb" +
+                (
+                    i === idx
+                        ? " active"
+                        : ""
+                );
+
+            t.setAttribute(
+                "aria-label",
+                `Open image ${i + 1}`
+            );
+
+            const im =
+                document.createElement(
+                    "img"
+                );
+
+            im.src = u;
+            im.alt = "";
+
+            t.appendChild(im);
+
+            t.addEventListener(
+                "click",
+                (e) => {
+
+                    e.stopPropagation();
+
+                    goTo(i);
+
+                }
+            );
+
+            mvThumbs.appendChild(t);
+
+        });
+
+        /*
+           Opening/default state.
+        */
+        if (userZoom <= 1.001) {
+            setThumbsVisible(true);
+        }
+    }
+
+    function markActiveThumb() {
+
+        const thumbs =
+            mvThumbs.querySelectorAll(
+                ".mv-thumb"
+            );
+
+        thumbs.forEach((t, i) => {
+
+            t.classList.toggle(
+                "active",
+                i === idx
+            );
+
+        });
+    }
+
+    function rebuildZoomMenu() {
+
+        mvMenu.innerHTML = "";
+
+        PRESETS.forEach(pct => {
+
+            const b =
+                document.createElement(
+                    "button"
+                );
+
+            b.type = "button";
+
+            b.setAttribute(
+                "data-zoom",
+                String(pct)
+            );
+
+            b.textContent =
+                pct === 100
+                    ? "100% (Default / Fit)"
+                    : `${pct}%`;
+
+            const current =
+                Math.round(
+                    userZoom * 100
+                );
+
+            b.classList.toggle(
+                "active",
+                current === pct
+            );
+
+            mvMenu.appendChild(b);
+
+        });
+    }
+
+    function updateZoomUI() {
+
+        const pct =
+            Math.round(
+                userZoom * 100
+            );
+
+        mvPctInput.value =
+            pct + "%";
+
+        mvRange.value =
+            clamp(
+                pct,
+                100,
+                800
+            );
+
+        /*
+           Cannot zoom out below default.
+        */
+        mvZoomOut.disabled =
+            userZoom <=
+            USER_ZOOM_MIN + 0.001;
+
+        mvZoomIn.disabled =
+            userZoom >=
+            USER_ZOOM_MAX - 0.001;
+
+        rebuildZoomMenu();
+    }
+
+    function clampPan() {
+
+        const r =
+            stageRect();
+
+        const stageW =
+            r.width;
+
+        const stageH =
+            r.height;
+
+        const scale =
+            actualScale();
+
+        const imgW =
+            naturalW * scale;
+
+        const imgH =
+            naturalH * scale;
+
+        const limX =
+            Math.max(
+                0,
+                (imgW - stageW) / 2
+            );
+
+        const limY =
+            Math.max(
+                0,
+                (imgH - stageH) / 2
+            );
+
+        offX =
+            clamp(
+                offX,
+                -limX,
+                limX
+            );
+
+        offY =
+            clamp(
+                offY,
+                -limY,
+                limY
+            );
+    }
+
+    function applyTransform() {
+
+        if (
+            !naturalW ||
+            !naturalH
+        ) {
+            return;
+        }
+
+        clampPan();
+
+        const s =
+            actualScale();
+
+        mvImg.style.transform =
+            `translate(-50%, -50%) ` +
+            `translate(${offX}px, ${offY}px) ` +
+            `scale(${s})`;
+
+        mv.classList.toggle(
+            "zoomed",
+            userZoom > 1.001
+        );
+
+        updateZoomUI();
+    }
+
+    function calculateFitScale() {
+
+        const r =
+            stageRect();
+
+        if (
+            !naturalW ||
+            !naturalH ||
+            !r.width ||
+            !r.height
+        ) {
+            return 1;
+        }
+
+        const padX =
+            Math.min(
+                24,
+                r.width * 0.04
+            );
+
+        const padY =
+            Math.min(
+                24,
+                r.height * 0.04
+            );
+
+        const availableW =
+            Math.max(
+                1,
+                r.width - padX * 2
+            );
+
+        const availableH =
+            Math.max(
+                1,
+                r.height - padY * 2
+            );
+
+        /*
+           The viewer must always fit to the height of the stage. A width
+           calculation would make tall certificate images shrink to a small
+           scale and create the visible fill-to-fit jump.
+        */
+        return availableH / naturalH;
+    }
+
+    function fitToStage() {
+
+        fitScale =
+            calculateFitScale();
+
+        userZoom = 1;
+
+        offX = 0;
+        offY = 0;
+
+        applyTransform();
+
+        /*
+           Restore the visibility state that was active when the viewer
+           closed, rather than forcing thumbnails on after every fit.
+        */
+        setThumbsVisible(
+            thumbnailVisibilityBeforeClose
+        );
+    }
+
+    function refitForViewport() {
+
+        if (
+            !naturalW ||
+            !naturalH
+        ) {
+            return;
+        }
+
+        const wasDefault =
+            userZoom <= 1.001;
+
+        fitScale =
+            calculateFitScale();
+
+        if (wasDefault) {
+
+            userZoom = 1;
+            offX = 0;
+            offY = 0;
+        }
+
+        applyTransform();
+
+        if (wasDefault) {
+            syncThumbsWithZoom();
+        }
+    }
+
+    function setUserZoom(
+        newZoom,
+        clientX = null,
+        clientY = null
+    ) {
+
+        /*
+           Absolute minimum is 1 (100% fitted).
+        */
+        newZoom =
+            clamp(
+                newZoom,
+                USER_ZOOM_MIN,
+                USER_ZOOM_MAX
+            );
+
+        const previousZoom =
+            userZoom;
+
+        const previousActual =
+            actualScale();
+
+        if (
+            Math.abs(
+                newZoom -
+                previousZoom
+            ) < 0.0001
+        ) {
+
+            /*
+               Still enforce thumbnail rule if caller attempted zoom-out while
+               already at default.
+            */
+            if (newZoom <= 1.001) {
+                syncThumbsWithZoom();
+            }
+
+            return;
+        }
+
+        userZoom =
+            newZoom;
+
+        const newActual =
+            actualScale();
+
+        if (
+            clientX != null &&
+            clientY != null &&
+            previousActual > 0
+        ) {
+
+            const r =
+                stageRect();
+
+            const px =
+                clientX -
+                r.left -
+                r.width / 2;
+
+            const py =
+                clientY -
+                r.top -
+                r.height / 2;
+
+            const ratio =
+                newActual /
+                previousActual;
+
+            offX =
+                (offX - px) *
+                ratio +
+                px;
+
+            offY =
+                (offY - py) *
+                ratio +
+                py;
+        }
+
+        /*
+           Exact default = centered fit.
+        */
+        if (
+            userZoom <=
+            USER_ZOOM_MIN + 0.001
+        ) {
+
+            userZoom = 1;
+            offX = 0;
+            offY = 0;
+        }
+
+        applyTransform();
+
+        /*
+           Requirement:
+           Zoom IN -> hide.
+           Zoom OUT all the way to Default -> show.
+        */
+        if (userZoom > 1.001) {
+            setThumbsVisible(false);
+        } else {
+            setThumbsVisible(true);
+        }
+    }
+
+    /*
+       Each button step goes between clean hundred percentages:
+       100 -> 200 -> 300 -> ... -> 800.
+    */
+    function zoomStep(dir) {
+
+        const currentPct =
+            Math.round(
+                userZoom * 100
+            );
+
+        let nextPct;
+
+        if (dir > 0) {
+
+            nextPct =
+                Math.ceil(
+                    currentPct / 100
+                ) * 100;
+
+            if (
+                nextPct <=
+                currentPct
+            ) {
+                nextPct += 100;
+            }
+
+        } else {
+
+            nextPct =
+                Math.floor(
+                    currentPct / 100
+                ) * 100;
+
+            if (
+                nextPct >=
+                currentPct
+            ) {
+                nextPct -= 100;
+            }
+        }
+
+        nextPct =
+            clamp(
+                nextPct,
+                100,
+                800
+            );
+
+        const r =
+            stageRect();
+
+        setUserZoom(
+            nextPct / 100,
+            r.left + r.width / 2,
+            r.top + r.height / 2
+        );
+    }
+
+    function parsePctInput(val) {
+
+        const s =
+            String(val)
+                .trim()
+                .replace("%", "");
+
+        const num =
+            parseFloat(s);
+
+        if (!isFinite(num)) {
+            return null;
+        }
+
+        /*
+           Cannot manually type less than 100 either.
+        */
+        return clamp(
+            num,
+            100,
+            800
+        );
+    }
+
+    function closeMenu() {
+        mvMenu.classList.remove(
+            "open"
+        );
+    }
+
+    function toggleMenu() {
+        mvMenu.classList.toggle(
+            "open"
+        );
+    }
+
+    async function urlExists(url) {
+
+        return new Promise(resolve => {
+
+            const im =
+                new Image();
+
+            im.onload =
+                () => resolve(true);
+
+            im.onerror =
+                () => resolve(false);
+
+            im.src = url;
+        });
+    }
+
+    async function collectImages(
+        base,
+        ext,
+        maxN
+    ) {
+
+        const found = [];
+        let missesInARow = 0;
+
+        for (
+            let n = 1;
+            n <= maxN;
+            n++
+        ) {
+
+            const u =
+                base +
+                n +
+                "." +
+                ext;
+
+            const ok =
+                await urlExists(u);
+
+            if (ok) {
+
+                found.push(u);
+                missesInARow = 0;
+
+            } else {
+
+                missesInARow++;
+
+                if (
+                    found.length > 0 &&
+                    missesInARow >= 2
+                ) {
+                    break;
+                }
+            }
+        }
+
+        return found;
+    }
+
+    async function openViewer({
+        kind,
+        title,
+        base,
+        ext,
+        maxN,
+        images
+    }) {
+
+        isOpen = true;
+
+        mv.classList.add(
+            "open"
+        );
+
+        mv.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+        urls = [];
+        idx = 0;
+
+        naturalW = 0;
+        naturalH = 0;
+
+        fitScale = 1;
+        userZoom = 1;
+
+        offX = 0;
+        offY = 0;
+
+        hasLoadedFirstImage = false;
+        mvImg.src = "";
+        mvImg.style.transform =
+            "translate(-50%, -50%) scale(1)";
+        mvImg.style.opacity = "0";
+        mvImg.style.visibility = "hidden";
+        mvThumbs.innerHTML = "";
+
+        setThumbsVisible(false);
+        updateArrows();
+        setStatus("Loading…");
+
+        const list = images
+            ? images.map(n => base + n + "." + ext)
+            : await collectImages(
+                base,
+                ext,
+                maxN
+            );
+
+        if (!isOpen) return;
+
+        urls = list;
+
+        const isCert =
+            kind === "doc";
+
+        const suffix =
+            isCert
+                ? (
+                    urls.length === 1
+                        ? "Certificate"
+                        : "Certificates"
+                )
+                : "Gallery";
+
+        mvTitle.textContent =
+            `${title} - ${suffix}`;
+
+        mvMeta.textContent =
+            urls.length > 1
+                ? `${idx + 1} / ${urls.length}`
+                : " ";
+
+        if (!urls.length) {
+
+            setStatus(
+                "No images found in this folder."
+            );
+
+            mvPrev.classList.add(
+                "hidden"
+            );
+
+            mvNext.classList.add(
+                "hidden"
+            );
+
+            return;
+        }
+
+        setStatus("");
+
+        updateArrows();
+        renderThumbs();
+
+        await loadImageAt(idx);
+    }
+
+    function closeViewer() {
+
+        if (!isOpen) return;
+
+        isOpen = false;
+
+        clearTimeout(clickTimer);
+        clearTimeout(tapTimer);
+
+        pointers.clear();
+
+        closeMenu();
+
+        thumbnailVisibilityBeforeClose =
+            mv.classList.contains(
+                "show-thumbs"
+            );
+
+        mv.classList.remove(
+            "open",
+            "zoomed",
+            "dragging",
+            "show-thumbs"
+        );
+
+        mv.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+    }
+
+    function goTo(newIdx) {
+
+        if (!urls.length) return;
+
+        newIdx =
+            clamp(
+                newIdx,
+                0,
+                urls.length - 1
+            );
+
+        if (newIdx === idx) {
+
+            /*
+               Clicking current thumbnail still resets it to default fit,
+               which keeps image state predictable.
+            */
+            fitToStage();
+            return;
+        }
+
+        idx = newIdx;
+
+        updateArrows();
+        markActiveThumb();
+        loadImageAt(idx);
+    }
+
+    function loadImageAt(i) {
+
+        return new Promise(resolve => {
+
+            const requestId =
+                ++loadRequestId;
+
+            isLoadingImage = true;
+
+            setStatus(
+                "Loading…"
+            );
+
+            mvMeta.textContent =
+                urls.length > 1
+                    ? `${i + 1} / ${urls.length}`
+                    : " ";
+
+            const u =
+                urls[i];
+
+            fitScale = 1;
+            userZoom = 1;
+            offX = 0;
+            offY = 0;
+            naturalW = 0;
+            naturalH = 0;
+
+            mv.classList.remove(
+                "zoomed",
+                "dragging"
+            );
+
+            mvImg.style.transform =
+                "translate(-50%, -50%) scale(1)";
+            mvImg.style.opacity = "0";
+            mvImg.style.visibility = "hidden";
+
+            const startedAt =
+                performance.now();
+            const minimumLoadingMs = 1000;
+            let revealTimer = null;
+            let settled = false;
+
+            const finish = () => {
+
+                if (settled) return;
+                settled = true;
+
+                window.clearTimeout(
+                    timeoutId
+                );
+                window.clearTimeout(
+                    revealTimer
+                );
+            };
+
+            const timeoutId =
+                window.setTimeout(() => {
+
+                    if (
+                        settled ||
+                        requestId !== loadRequestId ||
+                        !isOpen
+                    ) {
+                        return;
+                    }
+
+                    finish();
+                    isLoadingImage = false;
+                    setStatus(
+                        "Failed to load image."
+                    );
+                    resolve();
+                }, 15000);
+
+            const preload = new Image();
+
+            const revealImage = () => {
+
+                if (
+                    settled ||
+                    requestId !== loadRequestId ||
+                    !isOpen
+                ) {
+                    return;
+                }
+
+                naturalW =
+                    preload.naturalWidth || 0;
+                naturalH =
+                    preload.naturalHeight || 0;
+
+                if (
+                    !naturalW ||
+                    !naturalH
+                ) {
+                    finish();
+                    isLoadingImage = false;
+                    setStatus(
+                        "Failed to load image."
+                    );
+                    resolve();
+                    return;
+                }
+
+                hasLoadedFirstImage = true;
+                mvImg.src = u;
+
+                window.requestAnimationFrame(() => {
+
+                    if (
+                        requestId !== loadRequestId ||
+                        !isOpen
+                    ) {
+                        return;
+                    }
+
+                    fitScale =
+                        calculateFitScale();
+                    userZoom = 1;
+                    offX = 0;
+                    offY = 0;
+                    applyTransform();
+
+                    mvImg.style.opacity = "1";
+                    mvImg.style.visibility = "visible";
+                    setThumbsVisible(
+                        thumbnailVisibilityBeforeClose
+                    );
+                    finish();
+                    isLoadingImage = false;
+                    setStatus("");
+                    resolve();
+                });
+            };
+
+            const handleLoad = () => {
+
+                if (
+                    settled ||
+                    requestId !== loadRequestId ||
+                    !isOpen
+                ) {
+                    return;
+                }
+
+                const elapsed =
+                    performance.now() - startedAt;
+                const delay =
+                    Math.max(
+                        0,
+                        minimumLoadingMs - elapsed
+                    );
+
+                if (delay > 0) {
+                    revealTimer =
+                        window.setTimeout(
+                            revealImage,
+                            delay
+                        );
+                    return;
+                }
+
+                revealImage();
+            };
+
+            const handleError = () => {
+
+                if (
+                    settled ||
+                    requestId !== loadRequestId ||
+                    !isOpen
+                ) {
+                    return;
+                }
+
+                finish();
+                isLoadingImage = false;
+                setStatus(
+                    "Failed to load image."
+                );
+                resolve();
+            };
+
+            preload.onload = handleLoad;
+            preload.onerror = handleError;
+            preload.src = u;
+        });
+    }
+
+    /*
+       Existing single click functionality remains.
+    */
+    function stageSingleClick() {
+
+        if (urls.length <= 1) return;
+
+        setThumbsVisible(
+            !mv.classList.contains(
+                "show-thumbs"
+            )
+        );
+    }
+
+    function stageDoubleZoom(
+        clientX,
+        clientY
+    ) {
+
+        if (
+            userZoom > 1.001
+        ) {
+
+            /*
+               Return to minimum/default.
+            */
+            fitToStage();
+
+        } else {
+
+            /*
+               Default -> 200%.
+            */
+            setUserZoom(
+                2,
+                clientX,
+                clientY
+            );
+        }
+    }
+
+    function distance(a, b) {
+
+        const dx =
+            a.x - b.x;
+
+        const dy =
+            a.y - b.y;
+
+        return Math.hypot(
+            dx,
+            dy
+        );
+    }
+
+    function midpoint(a, b) {
+
+        return {
+            x: (a.x + b.x) / 2,
+            y: (a.y + b.y) / 2
+        };
+    }
+
+    /* =====================================================
+       OPEN BUTTONS
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        (e) => {
+
+            const btn =
+                e.target.closest(
+                    ".js-open-viewer"
+                );
+
+            if (!btn) return;
+
+            const kind =
+                btn.getAttribute(
+                    "data-viewer-kind"
+                );
+
+            const title =
+                btn.getAttribute(
+                    "data-viewer-title"
+                ) || "Item";
+
+            const base =
+                btn.getAttribute(
+                    "data-viewer-base"
+                ) || "";
+
+            const ext =
+                btn.getAttribute(
+                    "data-viewer-ext"
+                ) || "png";
+
+            const maxN =
+                parseInt(
+                    btn.getAttribute(
+                        "data-viewer-max"
+                    ) || "25",
+                    10
+                );
+
+            const images =
+                (btn.getAttribute(
+                    "data-viewer-images"
+                ) || "")
+                    .split(",")
+                    .map(n => n.trim())
+                    .filter(Boolean);
+
+            openViewer({
+                kind,
+                title,
+                base,
+                ext,
+                maxN,
+                images: images.length
+                    ? images
+                    : null
+            });
+        }
+    );
+
+    mvBackdrop.addEventListener(
+        "click",
+        closeViewer
+    );
+
+    mvClose.addEventListener(
+        "click",
+        closeViewer
+    );
+
+    window.addEventListener(
+        "keydown",
+        (e) => {
+
+            if (!isOpen) return;
+
+            if (e.key === "Escape") {
+                closeViewer();
+            }
+
+            if (e.key === "ArrowLeft") {
+                goTo(idx - 1);
+            }
+
+            if (e.key === "ArrowRight") {
+                goTo(idx + 1);
+            }
+        }
+    );
+
+    mvPrev.addEventListener(
+        "click",
+        () => goTo(idx - 1)
+    );
+
+    mvNext.addEventListener(
+        "click",
+        () => goTo(idx + 1)
+    );
+
+    /* =====================================================
+       ZOOM BUTTONS
+    ===================================================== */
+
+    mvZoomIn.addEventListener(
+        "click",
+        () => {
+            zoomStep(+1);
+        }
+    );
+
+    mvZoomOut.addEventListener(
+        "click",
+        () => {
+            zoomStep(-1);
+        }
+    );
+
+    /*
+       Slider's minimum is now 100.
+       It physically cannot go below fit.
+    */
+    mvRange.addEventListener(
+        "input",
+        () => {
+
+            const pct =
+                clamp(
+                    parseFloat(
+                        mvRange.value
+                    ),
+                    100,
+                    800
+                );
+
+            const r =
+                stageRect();
+
+            setUserZoom(
+                pct / 100,
+                r.left + r.width / 2,
+                r.top + r.height / 2
+            );
+        }
+    );
+
+    mvPctInput.addEventListener(
+        "keydown",
+        (e) => {
+
+            if (e.key !== "Enter") {
+                return;
+            }
+
+            const pct =
+                parsePctInput(
+                    mvPctInput.value
+                );
+
+            if (pct == null) {
+
+                updateZoomUI();
+                return;
+            }
+
+            const r =
+                stageRect();
+
+            setUserZoom(
+                pct / 100,
+                r.left + r.width / 2,
+                r.top + r.height / 2
+            );
+
+            mvPctInput.blur();
+            closeMenu();
+        }
+    );
+
+    mvPctInput.addEventListener(
+        "blur",
+        () => {
+
+            const pct =
+                parsePctInput(
+                    mvPctInput.value
+                );
+
+            if (pct == null) {
+
+                updateZoomUI();
+                return;
+            }
+
+            const r =
+                stageRect();
+
+            setUserZoom(
+                pct / 100,
+                r.left + r.width / 2,
+                r.top + r.height / 2
+            );
+        }
+    );
+
+    mvPctToggle.addEventListener(
+        "click",
+        (e) => {
+
+            e.stopPropagation();
+            rebuildZoomMenu();
+            toggleMenu();
+
+        }
+    );
+
+    mvMenu.addEventListener(
+        "click",
+        (e) => {
+
+            const b =
+                e.target.closest(
+                    "button[data-zoom]"
+                );
+
+            if (!b) return;
+
+            const pct =
+                parseFloat(
+                    b.getAttribute(
+                        "data-zoom"
+                    )
+                );
+
+            const r =
+                stageRect();
+
+            setUserZoom(
+                pct / 100,
+                r.left + r.width / 2,
+                r.top + r.height / 2
+            );
+
+            closeMenu();
+        }
+    );
+
+    document.addEventListener(
+        "click",
+        (e) => {
+
+            if (!isOpen) return;
+
+            if (
+                mvMenu.classList.contains(
+                    "open"
+                )
+            ) {
+
+                const inside =
+                    e.target.closest(
+                        "#mvPct"
+                    );
+
+                if (!inside) {
+                    closeMenu();
+                }
+            }
+        }
+    );
+
+    /* =====================================================
+       VIEWPORT / BROWSER ZOOM
+    ===================================================== */
+
+    function scheduleViewerResize() {
+
+        if (!isOpen || isLoadingImage) return;
+
+        cancelAnimationFrame(
+            resizeFrame
+        );
+
+        resizeFrame =
+            requestAnimationFrame(() => {
+                refitForViewport();
+            });
+    }
+
+    window.addEventListener(
+        "resize",
+        scheduleViewerResize
+    );
+
+    window.addEventListener(
+        "orientationchange",
+        () => {
+
+            setTimeout(
+                scheduleViewerResize,
+                100
+            );
+        }
+    );
+
+    if (window.visualViewport) {
+
+        window.visualViewport.addEventListener(
+            "resize",
+            scheduleViewerResize
+        );
+    }
+
+    if ("ResizeObserver" in window) {
+
+        const stageResizeObserver =
+            new ResizeObserver(() => {
+
+                if (!isOpen) return;
+
+                scheduleViewerResize();
+
+            });
+
+        stageResizeObserver.observe(
+            mvStage
+        );
+    }
+
+    /* =====================================================
+       SINGLE / DOUBLE CLICK
+    ===================================================== */
+
+    mvStage.addEventListener(
+        "click",
+        (e) => {
+
+            if (!isOpen) return;
+
+            if (
+                lastPointerType ===
+                "touch"
+            ) {
+                return;
+            }
+
+            if (pointerMoved) {
+
+                pointerMoved = false;
+                return;
+            }
+
+            if (
+                mvMenu.classList.contains(
+                    "open"
+                )
+            ) {
+                closeMenu();
+                return;
+            }
+
+            closeMenu();
+
+            clearTimeout(
+                clickTimer
+            );
+
+            clickTimer =
+                setTimeout(() => {
+                    stageSingleClick();
+                }, 220);
+        }
+    );
+
+    mvStage.addEventListener(
+        "dblclick",
+        (e) => {
+
+            if (!isOpen) return;
+
+            if (
+                lastPointerType ===
+                "touch"
+            ) {
+                return;
+            }
+
+            clearTimeout(
+                clickTimer
+            );
+
+            stageDoubleZoom(
+                e.clientX,
+                e.clientY
+            );
+        }
+    );
+
+    /* =====================================================
+       POINTER / MOBILE GESTURES
+    ===================================================== */
+
+    mvStage.addEventListener(
+        "pointerdown",
+        (e) => {
+
+            if (!isOpen) return;
+
+            lastPointerType =
+                e.pointerType || "mouse";
+
+            try {
+
+                mvStage.setPointerCapture(
+                    e.pointerId
+                );
+
+            } catch (_) {}
+
+            pointers.set(
+                e.pointerId,
+                {
+                    x: e.clientX,
+                    y: e.clientY
+                }
+            );
+
+            pointerDownPos = {
+                x: e.clientX,
+                y: e.clientY
+            };
+
+            pointerMoved = false;
+
+            if (
+                pointers.size === 2
+            ) {
+
+                const pts =
+                    [...pointers.values()];
+
+                pinchStartDist =
+                    distance(
+                        pts[0],
+                        pts[1]
+                    );
+
+                pinchStartZoom =
+                    userZoom;
+
+                pinchMid =
+                    midpoint(
+                        pts[0],
+                        pts[1]
+                    );
+
+                pointerMoved = true;
+                isDragging = false;
+
+            } else if (
+                pointers.size === 1 &&
+                userZoom > 1.001
+            ) {
+
+                dragStart = {
+                    x: e.clientX,
+                    y: e.clientY,
+                    offX,
+                    offY
+                };
+            }
+        }
+    );
+
+    mvStage.addEventListener(
+        "pointermove",
+        (e) => {
+
+            if (!isOpen) return;
+
+            if (
+                !pointers.has(
+                    e.pointerId
+                )
+            ) {
+                return;
+            }
+
+            pointers.set(
+                e.pointerId,
+                {
+                    x: e.clientX,
+                    y: e.clientY
+                }
+            );
+
+            /*
+               Pinch zoom.
+               setUserZoom clamps it to minimum 100%, so mobile cannot
+               pinch smaller than the fitted image either.
+            */
+            if (
+                pointers.size === 2
+            ) {
+
+                pointerMoved = true;
+
+                const pts =
+                    [...pointers.values()];
+
+                const d =
+                    distance(
+                        pts[0],
+                        pts[1]
+                    );
+
+                if (
+                    pinchStartDist <= 0
+                ) {
+                    return;
+                }
+
+                const factor =
+                    d /
+                    pinchStartDist;
+
+                const ns =
+                    pinchStartZoom *
+                    factor;
+
+                setUserZoom(
+                    ns,
+                    pinchMid.x,
+                    pinchMid.y
+                );
+
+                return;
+            }
+
+            /*
+               Pan only when enlarged.
+            */
+            if (
+                pointers.size === 1 &&
+                userZoom > 1.001
+            ) {
+
+                const dx =
+                    e.clientX -
+                    pointerDownPos.x;
+
+                const dy =
+                    e.clientY -
+                    pointerDownPos.y;
+
+                const moved =
+                    Math.hypot(
+                        dx,
+                        dy
+                    );
+
+                if (
+                    !isDragging &&
+                    moved > 5
+                ) {
+
+                    isDragging = true;
+                    pointerMoved = true;
+
+                    mv.classList.add(
+                        "dragging"
+                    );
+                }
+
+                if (isDragging) {
+
+                    offX =
+                        dragStart.offX +
+                        (
+                            e.clientX -
+                            dragStart.x
+                        );
+
+                    offY =
+                        dragStart.offY +
+                        (
+                            e.clientY -
+                            dragStart.y
+                        );
+
+                    applyTransform();
+                }
+            }
+        }
+    );
+
+    function endPointer(e) {
+
+        if (!isOpen) return;
+
+        const wasTouch =
+            e.pointerType ===
+            "touch";
+
+        pointers.delete(
+            e.pointerId
+        );
+
+        if (
+            pointers.size < 2
+        ) {
+
+            pinchStartDist = 0;
+        }
+
+        if (
+            pointers.size !== 0
+        ) {
+            return;
+        }
+
+        const endedDragging =
+            isDragging;
+
+        isDragging = false;
+
+        mv.classList.remove(
+            "dragging"
+        );
+
+        clampPan();
+        applyTransform();
+
+        /*
+           Single / double tap on mobile.
+        */
+        if (
+            wasTouch &&
+            !endedDragging &&
+            !pointerMoved
+        ) {
+
+            const now =
+                Date.now();
+
+            const dx =
+                e.clientX -
+                lastTapPos.x;
+
+            const dy =
+                e.clientY -
+                lastTapPos.y;
+
+            const dist =
+                Math.hypot(
+                    dx,
+                    dy
+                );
+
+            if (
+                now -
+                lastTapTime <
+                280 &&
+                dist < 24
+            ) {
+
+                clearTimeout(
+                    tapTimer
+                );
+
+                tapTimer = null;
+                lastTapTime = 0;
+
+                stageDoubleZoom(
+                    e.clientX,
+                    e.clientY
+                );
+
+            } else {
+
+                lastTapTime =
+                    now;
+
+                lastTapPos = {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+
+                clearTimeout(
+                    tapTimer
+                );
+
+                tapTimer =
+                    setTimeout(() => {
+
+                        stageSingleClick();
+
+                    }, 280);
+            }
+        }
+
+        if (pointerMoved) {
+
+            setTimeout(() => {
+                pointerMoved = false;
+            }, 0);
+        }
+    }
+
+    mvStage.addEventListener(
+        "pointerup",
+        endPointer
+    );
+
+    mvStage.addEventListener(
+        "pointercancel",
+        endPointer
+    );
+
+})();
+</script>
+
+</body>
+</html>
