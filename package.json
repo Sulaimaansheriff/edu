@@ -1,8 +1,8 @@
-<escape>{
-"name": "private-drive-images",
-"version": "1.0.0",
-"private": true,
-"dependencies": {
-"googleapis": "^166.0.0"
+{
+  "name": "private-drive-images",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "googleapis": "^166.0.0"
+  }
 }
-}</escape>
