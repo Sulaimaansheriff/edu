@@ -248,12 +248,17 @@
             overflow-x: hidden;
             padding-right: 6px;
             border-radius: var(--radius-lg);
-            cursor: grab;
+            cursor: default;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: auto;
-            touch-action: none;
+            touch-action: auto;
             scrollbar-width: thin;
             scrollbar-color: rgba(0,0,0,0.25) transparent;        }
+
+        .edu-scroll-box.is-scrollable {
+            cursor: grab;
+            touch-action: none;
+        }
 
         .edu-scroll-box.dragging {
             cursor: grabbing;
@@ -262,7 +267,10 @@
         }
 
         .edu-scroll-box a,
-        .edu-scroll-box button,
+        .edu-scroll-box button {
+            cursor: pointer;
+        }
+
         .edu-scroll-box input,
         .edu-scroll-box select,
         .edu-scroll-box textarea {
@@ -663,13 +671,18 @@
             overflow-y: auto;
             overflow-x: hidden;
             border-radius: var(--radius-lg);
-            cursor: grab;
+            cursor: default;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
             overscroll-behavior: auto;
-            touch-action: none;
+            touch-action: auto;
             scrollbar-width: thin;
             scrollbar-color: rgba(0,0,0,0.25) transparent;
+        }
+
+        .cert-scroll-box.is-scrollable {
+            cursor: grab;
+            touch-action: none;
         }
 
         .cert-scroll-box.dragging {
@@ -919,10 +932,10 @@
 
         .mv-dialog {
             position: relative;
-            width: min(1120px, calc(100% - 28px));
-            height: min(780px, calc(100% - 28px));
-            max-width: calc(100vw - 28px);
-            max-height: calc(100vh - 28px);
+            width: clamp(1120px, 76vw, 2060px);
+            height: clamp(780px, 84vh, 2060px);
+            max-width: min(2060px, calc(100vw - 28px));
+            max-height: min(2060px, calc(100vh - 28px));
             border-radius: 18px;
 
             /* Fully white */
@@ -1504,7 +1517,7 @@
                                     <circle cx="12" cy="10.5" r="2.5" stroke-width="2" />
                                 </svg>
 
-                                <span>245, 3 De Fonseka Pl, Colombo 00400</span>
+                                <span><a href="https://maps.app.goo.gl/LK7gDYWHmQhsKhjk8" target="_blank" rel="noopener noreferrer">245, 3 De Fonseka Pl, Colombo 00400</a></span>
                             </div>
 
                             <ul class="card-list">
@@ -1550,7 +1563,7 @@
                                     <circle cx="12" cy="10.5" r="2.5" stroke-width="2" />
                                 </svg>
 
-                                <span>245, 3 De Fonseka Pl, Colombo 00400</span>
+                                <span><a href="https://maps.app.goo.gl/LK7gDYWHmQhsKhjk8" target="_blank" rel="noopener noreferrer">245, 3 De Fonseka Pl, Colombo 00400</a></span>
                             </div>
 
                             <ul class="card-list">
@@ -2105,6 +2118,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!scrollBox) return;
 
+    function updateScrollability() {
+        scrollBox.classList.toggle(
+            "is-scrollable",
+            scrollBox.scrollHeight >
+            scrollBox.clientHeight + 1
+        );
+    }
+
+    updateScrollability();
+
+    if ("ResizeObserver" in window) {
+        const resizeObserver =
+            new ResizeObserver(updateScrollability);
+
+        resizeObserver.observe(scrollBox);
+        resizeObserver.observe(scrollBox.firstElementChild);
+    }
+
+    const contentObserver =
+        new MutationObserver(updateScrollability);
+
+    contentObserver.observe(scrollBox, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true
+    });
+
     let eduDrag = null;
 
     function endEduDrag(e) {
@@ -2133,6 +2174,8 @@ document.addEventListener("DOMContentLoaded", () => {
         (e) => {
 
             if (e.button !== 0) return;
+            updateScrollability();
+            if (!scrollBox.classList.contains("is-scrollable")) return;
 
             const target =
                 e.target.closest(
@@ -2499,6 +2542,14 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    function updateScrollability() {
+        scrollBox.classList.toggle(
+            "is-scrollable",
+            scrollBox.scrollHeight >
+            scrollBox.clientHeight + 1
+        );
+    }
+
     /*
        Critical last-year calculation.
 
@@ -2579,6 +2630,7 @@ document.addEventListener("DOMContentLoaded", () => {
            Now create just enough bottom room for last year -> top.
         */
         applyLastYearBottomSpace();
+        updateScrollability();
 
         /*
            Preserve legal scroll position after device rotation / browser zoom.
@@ -2642,7 +2694,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     scrollBox.addEventListener(
         "scroll",
-        () => detectActiveYear(),
+        () => {
+            detectActiveYear();
+            updateScrollability();
+        },
         { passive: true }
     );
 
@@ -2656,6 +2711,8 @@ document.addEventListener("DOMContentLoaded", () => {
         (e) => {
 
             if (e.button !== 0) return;
+            updateScrollability();
+            if (!scrollBox.classList.contains("is-scrollable")) return;
 
             const target =
                 e.target.closest(
@@ -2784,6 +2841,17 @@ document.addEventListener("DOMContentLoaded", () => {
     gather();
     buildYearNav();
     setActiveNav(0);
+    updateScrollability();
+
+    const contentObserver =
+        new MutationObserver(updateScrollability);
+
+    contentObserver.observe(track, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true
+    });
 
     requestAnimationFrame(
         syncSizes
@@ -2825,6 +2893,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         ro.observe(eduCol);
+        ro.observe(scrollBox);
         ro.observe(track);
         ro.observe(yearNav);
         ro.observe(certHdr);
