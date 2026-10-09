@@ -1,3 +1,4 @@
+
 const { google } = require("googleapis");
 
 module.exports = async function handler(req, res) {
@@ -9,17 +10,21 @@ module.exports = async function handler(req, res) {
     const fileId = req.query.fileId;
 
     // Validate the Google Drive file ID
-    if (!fileId || !/^[a-zA-Z0-9_-]+$/.test(fileId)) {
+    if (
+      typeof fileId !== "string" ||
+      !/^[a-zA-Z0-9_-]+$/.test(fileId)
+    ) {
       return res.status(400).send("Invalid image ID");
     }
 
-    // Read Google credentials from Vercel environment variables
+    // Read credentials from Vercel environment variables
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
     const projectId = process.env.GOOGLE_PROJECT_ID;
 
     if (!privateKey || !clientEmail || !projectId) {
-      throw new Error("One or more Google credentials are missing");
+      console.error("Google Drive credentials are missing");
+      return res.status(500).send("Server configuration error");
     }
 
     // Authenticate with Google Drive
@@ -29,7 +34,9 @@ module.exports = async function handler(req, res) {
         client_email: clientEmail,
         private_key: privateKey.replace(/\\n/g, "\n"),
       },
-      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+      scopes: [
+        "https://www.googleapis.com/auth/drive.readonly",
+      ],
     });
 
     const drive = google.drive({
@@ -37,39 +44,53 @@ module.exports = async function handler(req, res) {
       auth,
     });
 
-    // Get image metadata
-    const metadata = await drive.files.get({
+    // Retrieve file metadata
+    const metadataResponse = await drive.files.get({
       fileId,
-      fields: "mimeType",
+      fields: "id,name,mimeType,size,webViewLink",
+      supportsAllDrives: true,
     });
 
-    const mimeType = metadata.data.mimeType;
+    const metadata = metadataResponse.data;
+    const mimeType = metadata.mimeType;
 
-    // Allow image files only
+    console.log("Drive file metadata:", {
+      id: metadata.id,
+      name: metadata.name,
+      mimeType: metadata.mimeType,
+      size: metadata.size,
+    });
+
+    // Accept image files only
     if (!mimeType || !mimeType.startsWith("image/")) {
       return res.status(400).send("The requested file is not an image");
     }
 
-    // Download the image as a stream
+    // Download the image
     const imageResponse = await drive.files.get(
-  {
-    fileId,
-    alt: "media",
-    acknowledgeAbuse: true,
-  },
-  {
-    responseType: "stream",
-  }
-);
+      {
+        fileId,
+        alt: "media",
+        acknowledgeAbuse: true,
+        supportsAllDrives: true,
+      },
+      {
+        responseType: "stream",
+      }
+    );
 
     res.setHeader("Content-Type", mimeType);
     res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("X-Content-Type-Options", "nosniff");
 
     imageResponse.data.on("error", (error) => {
-      console.error("Google Drive image stream error:", error.message);
+      console.error(
+        "Google Drive image stream error:",
+        error.message
+      );
 
       if (!res.headersSent) {
-        res.status(500).end("Unable to load image");
+        res.status(502).end("Image download failed");
       } else {
         res.destroy(error);
       }
@@ -77,13 +98,33 @@ module.exports = async function handler(req, res) {
 
     imageResponse.data.pipe(res);
   } catch (error) {
-    console.error("Google Drive image error:", error.message);
-    console.error(error.stack);
+    const googleError = error.response?.data?.error;
+
+    console.error("Google Drive image error:", {
+      message: error.message,
+      status: error.response?.status,
+      reason: googleError?.errors?.[0]?.reason,
+      details: googleError?.message,
+    });
 
     if (!res.headersSent) {
-      res.status(500).send("Unable to load image");
-    } else {
-      res.destroy(error);
+      const status = error.response?.status;
+
+      if (status === 403) {
+        return res
+          .status(403)
+          .send("Google Drive denied permission to download this image");
+      }
+
+      if (status === 404) {
+        return res
+          .status(404)
+          .send("Image not found or not accessible");
+      }
+
+      return res.status(500).send("Unable to load image");
     }
+
+    res.destroy(error);
   }
 };
