@@ -3944,29 +3944,55 @@ let list;
 
 if (source === "drive") {
     try {
-        const response = await fetch("/api/drive-images");
+        const response = await fetch("/api/drive-images", {
+            cache: "no-store"
+        });
 
         if (!response.ok) {
             throw new Error("Could not load Drive image list");
         }
 
         const data = await response.json();
-        const wanted = images || [];
+        const wanted = (images || []).map(Number);
 
-        const byNumber = new Map(
-            (data.images || []).map(item => [
-                Number(item.number),
-                item.url
-            ])
+        const availableNumbers = new Set(
+            (data.images || []).map(item => Number(item.number))
         );
 
-        list = wanted
-            .map(number => byNumber.get(Number(number)))
-            .filter(Boolean);
+        const selectedNumbers = wanted.filter(number =>
+            availableNumbers.has(number)
+        );
 
-        if (list.length === 0) {
+        if (selectedNumbers.length === 0) {
             throw new Error("No matching Drive images found");
         }
+
+        list = await Promise.all(
+            selectedNumbers.map(async number => {
+                const linkResponse = await fetch(
+                    "/api/image-access?number=" +
+                    encodeURIComponent(number),
+                    {
+                        cache: "no-store"
+                    }
+                );
+
+                if (!linkResponse.ok) {
+                    throw new Error(
+                        "Could not create temporary link for image " + number
+                    );
+                }
+
+                const linkData = await linkResponse.json();
+
+                if (!linkData.url) {
+                    throw new Error("Temporary image URL is missing");
+                }
+
+                return linkData.url;
+            })
+        );
+
     } catch (error) {
         console.error("Drive images error:", error);
         setStatus("Could not load the selected Drive images.");
