@@ -7,15 +7,56 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const fileId = req.query.fileId;
+const fileId = req.query.fileId;
+const expires = req.query.expires;
+const signature = req.query.signature;
 
-    // Validate the Google Drive file ID
-    if (
-      typeof fileId !== "string" ||
-      !/^[a-zA-Z0-9_-]+$/.test(fileId)
-    ) {
-      return res.status(400).send("Invalid image ID");
-    }
+if (
+  typeof fileId !== "string" ||
+  !/^[a-zA-Z0-9_-]+$/.test(fileId)
+) {
+  return res.status(400).send("Invalid image ID");
+}
+
+const signingSecret = process.env.IMAGE_SIGNING_SECRET;
+
+if (!signingSecret) {
+  return res.status(500).send("Server configuration error");
+}
+
+if (
+  typeof expires !== "string" ||
+  !/^\d+$/.test(expires) ||
+  typeof signature !== "string" ||
+  !/^[a-f0-9]{64}$/.test(signature)
+) {
+  return res.status(403).send("Access Denied");
+}
+
+const expiryTime = Number(expires);
+
+if (!Number.isSafeInteger(expiryTime) ||
+    Math.floor(Date.now() / 1000) >= expiryTime) {
+  return res.status(403).send("Link Expired");
+}
+
+const crypto = require("crypto");
+const payload = `${fileId}.${expires}`;
+
+const expectedSignature = crypto
+  .createHmac("sha256", signingSecret)
+  .update(payload)
+  .digest("hex");
+
+const supplied = Buffer.from(signature, "hex");
+const expected = Buffer.from(expectedSignature, "hex");
+
+if (
+  supplied.length !== expected.length ||
+  !crypto.timingSafeEqual(supplied, expected)
+) {
+  return res.status(403).send("Access Denied");
+}
 
     // Read credentials from Vercel environment variables
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
@@ -80,7 +121,7 @@ module.exports = async function handler(req, res) {
     );
 
     res.setHeader("Content-Type", mimeType);
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "no-store, private, max-age=0");
     res.setHeader("X-Content-Type-Options", "nosniff");
 
     imageResponse.data.on("error", (error) => {
