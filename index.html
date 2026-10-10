@@ -4114,8 +4114,7 @@ if (source === "drive") {
                     ? `${i + 1} / ${urls.length}`
                     : " ";
 
-            const u =
-                urls[i];
+            let u = urls[i];
 
             fitScale = 1;
             userZoom = 1;
@@ -4281,9 +4280,53 @@ if (source === "drive") {
                 resolve();
             };
 
-            preload.onload = handleLoad;
-            preload.onerror = handleError;
-            preload.src = u;
+            
+preload.onload = handleLoad;
+preload.onerror = handleError;
+
+(async () => {
+    try {
+        if (u.startsWith("drive-number:")) {
+            const number = u.slice("drive-number:".length);
+
+            const response = await fetch(
+                "/api/image-access?number=" +
+                encodeURIComponent(number),
+                { cache: "no-store" }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "Could not create temporary link for image " + number
+                );
+            }
+
+            const data = await response.json();
+
+            if (!data.url) {
+                throw new Error("Temporary image URL is missing");
+            }
+
+            u = new URL(data.url, window.location.origin).href;
+        }
+
+        if (settled || requestId !== loadRequestId || !isOpen) {
+            resolve();
+            return;
+        }
+
+        preload.src = u;
+    } catch (error) {
+        console.error("Image loading error:", error);
+
+        if (!settled && requestId === loadRequestId && isOpen) {
+            finish();
+            isLoadingImage = false;
+            setStatus("Failed to load image.");
+            resolve();
+        }
+    }
+})();
         });
     }
 
