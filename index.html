@@ -1210,6 +1210,50 @@
             }
         }
 
+        .mv.zoom-stable:not(.zoom-stable-mobile) .mv-controls {
+            grid-template-columns: auto 1fr auto auto;
+            grid-template-rows: auto;
+        }
+
+        .mv.zoom-stable:not(.zoom-stable-mobile) .mv-controls .mv-pct {
+            grid-column: auto;
+        }
+
+        .mv.zoom-stable:not(.zoom-stable-mobile) .mv-thumbs {
+            max-width: calc(100% - 28px);
+            max-height: min(180px, 45%);
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .mv.zoom-stable:not(.zoom-stable-mobile) .mv-thumb {
+            width: 86px;
+            height: 62px;
+            flex-basis: 86px;
+        }
+
+        .mv.zoom-stable.zoom-stable-mobile .mv-controls {
+            grid-template-columns: auto 1fr auto;
+            grid-template-rows: auto auto;
+        }
+
+        .mv.zoom-stable.zoom-stable-mobile .mv-controls .mv-pct {
+            grid-column: 1 / -1;
+        }
+
+        .mv.zoom-stable.zoom-stable-mobile .mv-thumbs {
+            max-width: calc(100% - 18px);
+            max-height: min(190px, 42%);
+            padding: 8px;
+            gap: 8px;
+        }
+
+        .mv.zoom-stable.zoom-stable-mobile .mv-thumb {
+            width: 72px;
+            height: 52px;
+            flex-basis: 72px;
+        }
+
         /* =========================================================
            CONTROLS
         ========================================================= */
@@ -1316,6 +1360,11 @@
             border: 0;
         }
 
+        .mv-range input[type="range"]:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
         .mv-pct {
             position: relative;
             z-index: 100;
@@ -1327,7 +1376,7 @@
             background: #ffffff;
 
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: minmax(0, 1fr) auto auto;
             overflow: visible;
         }
 
@@ -1343,6 +1392,24 @@
             width: 100%;
             border-radius: 12px 0 0 12px;
             height: 40px;
+        }
+
+        .mv-pct input:disabled,
+        .mv-pct > button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .mv-pct-suffix {
+            display: grid;
+            place-items: center;
+            min-width: 28px;
+            height: 40px;
+            border-left: 1px solid rgba(0,0,0,0.10);
+            color: #111;
+            font-size: 11px;
+            font-weight: 900;
+            user-select: none;
         }
 
         .mv-pct > button {
@@ -1580,7 +1647,7 @@
                         <div class="journey-card">
                             <div class="card-top">
                                 <div>
-                                    <h4 class="card-title">Secondary Education</h4>
+                                    <h4 class="card-title">Primary & Secondary Education</h4>
                                     <p class="card-subtitle">General Education</p>
                                 </div>
 
@@ -1589,14 +1656,11 @@
 
                             <div class="organization">
                                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M2 8l10-5 10 5-10 5L2 8z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M6 10.5v5.2c0 .7.4 1.4 1 1.7 1.6.9 3.4 1.4 5 1.4s3.4-.5 5-1.4c.6-.3 1-.9 1-1.7v-5.2" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M22 8v6" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M23 14a1 1 0 11-2 0 1 1 0 012 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 21V7l7-4 7 4v14"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 21v-5h6v5"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h1m6 0h1"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 13h1m6 0h1"></path>
                                 </svg>
 
                                 <span>D.S. Senanayake College | Colombo 7</span>
@@ -1609,7 +1673,7 @@
                                     <circle cx="12" cy="10.5" r="2.5" stroke-width="2" />
                                 </svg>
 
-                                <span>07, 62 8 R.G. Senanayake Mawatha, Colombo 00700</span>
+                                <span><a href="https://maps.app.goo.gl/LK7gDYWHmQhsKhjk8" target="_blank" rel="noopener noreferrer">07, 62 8 R.G. Senanayake Mawatha, Colombo 00700</a></span>
                             </div>
 
                             <ul class="card-list">
@@ -2049,9 +2113,13 @@
                     id="mvPctInput"
                     type="text"
                     inputmode="numeric"
-                    value="100%"
+                    pattern="[0-9]*"
+                    maxlength="3"
+                    value="100"
                     aria-label="Zoom percentage"
                 >
+
+                <span class="mv-pct-suffix" aria-hidden="true">%</span>
 
                 <button id="mvPctToggle" type="button" aria-label="Zoom presets">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -2914,18 +2982,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
    You can NEVER zoom below fitted/default.
 
-   Thumbnail behavior:
-   - Open image -> visible.
-   - Zoom IN above 100% -> hidden.
-   - Zoom OUT all the way to 100% -> visible.
-   - Single click/tap continues to toggle it.
-   - Pan does not toggle it.
+    Browser page zoom keeps the popup at its default physical size above 100%.
+    Popup zoom controls affect only the image; viewer chrome stays unchanged.
+    Single click/tap continues to toggle thumbnails, and pan does not.
 ========================================================= */
 
 (function mediaViewer() {
 
     const mv =
         document.getElementById("mv");
+
+    const mvDialog =
+        mv.querySelector(".mv-dialog");
+
+    const defaultViewportWidth =
+        window.innerWidth;
+
+    const defaultViewportHeight =
+        window.innerHeight;
+
+    const defaultMobileLayout =
+        defaultViewportWidth <= 700;
+
+    const defaultPageScale =
+        (window.devicePixelRatio || 1) *
+        (window.visualViewport
+            ? window.visualViewport.scale
+            : 1);
+
+    const defaultDialogWidth =
+        Math.min(
+            defaultMobileLayout ? defaultViewportWidth - 18 : 1120,
+            defaultViewportWidth - (defaultMobileLayout ? 18 : 28)
+        );
+
+    const defaultDialogHeight =
+        Math.min(
+            defaultMobileLayout ? defaultViewportHeight - 18 : 780,
+            defaultViewportHeight - (defaultMobileLayout ? 18 : 28)
+        );
 
     const mvBackdrop =
         document.getElementById("mvBackdrop");
@@ -3012,6 +3107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let resizeFrame = 0;
     let loadRequestId = 0;
     let isLoadingImage = false;
+    let zoomControlsEnabled = false;
+    let viewerPageScaleCompensation = 1;
     let hasLoadedFirstImage = false;
     let thumbnailVisibilityBeforeClose = true;
 
@@ -3058,14 +3155,102 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function stageRect() {
-        return mvStage.getBoundingClientRect();
+        const rect =
+            mvStage.getBoundingClientRect();
+
+        const scale =
+            viewerPageScaleCompensation;
+
+        return {
+            left: rect.left + rect.width * (1 - scale) / 2,
+            top: rect.top + rect.height * (1 - scale) / 2,
+            width: rect.width / scale,
+            height: rect.height / scale
+        };
     }
 
     function actualScale() {
         return fitScale * userZoom;
     }
 
+    function syncViewerPageZoom() {
+
+        if (!isOpen) return;
+
+        const currentPageScale =
+            (window.devicePixelRatio || 1) *
+            (window.visualViewport
+                ? window.visualViewport.scale
+                : 1);
+
+        const compensation =
+            Math.min(
+                1,
+                defaultPageScale / currentPageScale
+            );
+
+        viewerPageScaleCompensation =
+            compensation;
+
+        mvDialog.style.transform =
+            `translate(-50%, -50%) scale(${compensation})`;
+    }
+
+    function applyDefaultViewerGeometry() {
+
+        mv.classList.toggle(
+            "zoom-stable-mobile",
+            defaultMobileLayout
+        );
+        mv.classList.add("zoom-stable");
+
+        mvDialog.style.position = "absolute";
+        mvDialog.style.left = "50%";
+        mvDialog.style.top = "50%";
+        mvDialog.style.width = defaultDialogWidth + "px";
+        mvDialog.style.height = defaultDialogHeight + "px";
+        mvDialog.style.maxWidth = "none";
+        mvDialog.style.maxHeight = "none";
+        mvDialog.style.borderRadius =
+            defaultMobileLayout ? "16px" : "18px";
+
+        syncViewerPageZoom();
+    }
+
+    function clearDefaultViewerGeometry() {
+
+        mv.classList.remove(
+            "zoom-stable",
+            "zoom-stable-mobile"
+        );
+
+        mvDialog.removeAttribute("style");
+        viewerPageScaleCompensation = 1;
+    }
+
+    function setZoomControlsEnabled(enabled) {
+        zoomControlsEnabled = enabled;
+
+        mvZoomOut.disabled = !enabled;
+        mvZoomIn.disabled = !enabled;
+        mvRange.disabled = !enabled;
+        mvPctInput.disabled = !enabled;
+        mvPctToggle.disabled = !enabled;
+
+        mvMenu
+            .querySelectorAll("button[data-zoom]")
+            .forEach(button => {
+                button.disabled = !enabled;
+            });
+
+        if (!enabled) {
+            closeMenu();
+        }
+    }
+
     function setStatus(text) {
+
+        setZoomControlsEnabled(!text);
 
         if (!text) {
             mvStatus.style.display =
@@ -3098,22 +3283,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    /*
-       Automatic thumbnail rule:
-       zoom > default => hidden
-       zoom == default => visible
-    */
     function syncThumbsWithZoom() {
 
         if (urls.length <= 1) {
             setThumbsVisible(false);
-            return;
-        }
-
-        if (userZoom > 1.001) {
-            setThumbsVisible(false);
-        } else {
-            setThumbsVisible(true);
         }
     }
 
@@ -3265,6 +3438,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "active",
                 current === pct
             );
+            b.disabled = !zoomControlsEnabled;
 
             mvMenu.appendChild(b);
 
@@ -3279,7 +3453,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         mvPctInput.value =
-            pct + "%";
+            String(pct);
 
         mvRange.value =
             clamp(
@@ -3292,12 +3466,12 @@ document.addEventListener("DOMContentLoaded", () => {
            Cannot zoom out below default.
         */
         mvZoomOut.disabled =
-            userZoom <=
-            USER_ZOOM_MIN + 0.001;
+            !zoomControlsEnabled ||
+            userZoom <= USER_ZOOM_MIN + 0.001;
 
         mvZoomIn.disabled =
-            userZoom >=
-            USER_ZOOM_MAX - 0.001;
+            !zoomControlsEnabled ||
+            userZoom >= USER_ZOOM_MAX - 0.001;
 
         rebuildZoomMenu();
     }
@@ -3434,13 +3608,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         applyTransform();
 
-        /*
-           Restore the visibility state that was active when the viewer
-           closed, rather than forcing thumbnails on after every fit.
-        */
-        setThumbsVisible(
-            thumbnailVisibilityBeforeClose
-        );
+        syncThumbsWithZoom();
     }
 
     function refitForViewport() {
@@ -3512,6 +3680,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        if (!zoomControlsEnabled) return;
+
         userZoom =
             newZoom;
 
@@ -3567,16 +3737,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         applyTransform();
 
-        /*
-           Requirement:
-           Zoom IN -> hide.
-           Zoom OUT all the way to Default -> show.
-        */
-        if (userZoom > 1.001) {
-            setThumbsVisible(false);
-        } else {
-            setThumbsVisible(true);
-        }
+        syncThumbsWithZoom();
     }
 
     /*
@@ -3642,11 +3803,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const s =
             String(val)
-                .trim()
-                .replace("%", "");
+                .trim();
 
-        const num =
-            parseFloat(s);
+        if (!/^\d+$/.test(s)) return null;
+
+        const num = Number(s);
 
         if (!isFinite(num)) {
             return null;
@@ -3743,6 +3904,8 @@ document.addEventListener("DOMContentLoaded", () => {
         mv.classList.add(
             "open"
         );
+
+        applyDefaultViewerGeometry();
 
         mv.setAttribute(
             "aria-hidden",
@@ -3888,6 +4051,8 @@ if (source === "drive") {
             "dragging",
             "show-thumbs"
         );
+
+        clearDefaultViewerGeometry();
 
         mv.setAttribute(
             "aria-hidden",
@@ -4336,6 +4501,75 @@ openViewer({
     );
 
     mvPctInput.addEventListener(
+        "beforeinput",
+        (e) => {
+            if (
+                e.inputType.startsWith("insert") &&
+                e.data != null &&
+                !/^\d+$/.test(e.data)
+            ) {
+                e.preventDefault();
+            }
+        }
+    );
+
+    mvPctInput.addEventListener(
+        "paste",
+        (e) => {
+            const pasted =
+                e.clipboardData.getData("text");
+
+            if (!/^\d+$/.test(pasted)) {
+                e.preventDefault();
+            }
+        }
+    );
+
+    mvPctInput.addEventListener(
+        "input",
+        () => {
+            const digits =
+                mvPctInput.value
+                    .replace(/\D/g, "")
+                    .slice(0, 3);
+
+            if (mvPctInput.value !== digits) {
+                const caret =
+                    mvPctInput.selectionStart ?? digits.length;
+
+                mvPctInput.value = digits;
+
+                const nextCaret =
+                    Math.min(caret, digits.length);
+
+                mvPctInput.setSelectionRange(
+                    nextCaret,
+                    nextCaret
+                );
+            }
+        }
+    );
+
+    mvPctInput.addEventListener(
+        "click",
+        () => {
+            const end = mvPctInput.value.length;
+            mvPctInput.setSelectionRange(end, end);
+        }
+    );
+
+    mvPctInput.addEventListener(
+        "dblclick",
+        (e) => {
+            e.preventDefault();
+            mvPctInput.setSelectionRange(
+                0,
+                mvPctInput.value.length
+            );
+        }
+    );
+
+    mvPctInput.addEventListener(
         "keydown",
         (e) => {
 
@@ -4466,7 +4700,7 @@ openViewer({
 
     function scheduleViewerResize() {
 
-        if (!isOpen || isLoadingImage) return;
+        if (!isOpen) return;
 
         cancelAnimationFrame(
             resizeFrame
@@ -4474,7 +4708,7 @@ openViewer({
 
         resizeFrame =
             requestAnimationFrame(() => {
-                refitForViewport();
+                syncViewerPageZoom();
             });
     }
 
