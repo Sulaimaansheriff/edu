@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const { google } = require("googleapis");
 
 const FOLDER_ID = "1GpTefSeAtcZ9bYkLNSgleHpRbX5DnYhP";
-const LINK_LIFETIME_SECONDS = 3;
+const LINK_LIFETIME_SECONDS = 300;
 
 function createSignature(payload, secret) {
   return crypto
