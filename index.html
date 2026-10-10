@@ -3942,6 +3942,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
 let list;
 
+
 if (source === "drive") {
     try {
         const response = await fetch("/api/drive-images", {
@@ -3967,31 +3968,9 @@ if (source === "drive") {
             throw new Error("No matching Drive images found");
         }
 
-        list = await Promise.all(
-            selectedNumbers.map(async number => {
-                const linkResponse = await fetch(
-                    "/api/image-access?number=" +
-                    encodeURIComponent(number),
-                    {
-                        cache: "no-store"
-                    }
-                );
-
-                if (!linkResponse.ok) {
-                    throw new Error(
-                        "Could not create temporary link for image " + number
-                    );
-                }
-
-                const linkData = await linkResponse.json();
-
-                if (!linkData.url) {
-                    throw new Error("Temporary image URL is missing");
-                }
-
-                return linkData.url;
-            })
-        );
+        // Store image numbers, NOT expiring URLs.
+        // A fresh signed URL will be requested when each image loads.
+        list = selectedNumbers.map(number => "drive-number:" + number);
 
     } catch (error) {
         console.error("Drive images error:", error);
