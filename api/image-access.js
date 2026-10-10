@@ -20,9 +20,21 @@ module.exports = async function handler(req, res) {
     return res.status(405).send("Method not allowed");
   }
 
-  const fileId = String(req.query.fileId || "");
+  const numberParam = String(req.query.number || "");
+  const requestedFileId = String(req.query.fileId || "");
 
-  if (!/^[a-zA-Z0-9_-]+$/.test(fileId)) {
+  // Accept either an image number or a Google Drive file ID.
+  if (
+    !requestedFileId &&
+    !/^[1-9]\d*$/.test(numberParam)
+  ) {
+    return res.status(400).send("Invalid image number or ID");
+  }
+
+  if (
+    requestedFileId &&
+    !/^[a-zA-Z0-9_-]+$/.test(requestedFileId)
+  ) {
     return res.status(400).send("Invalid image ID");
   }
 
@@ -47,14 +59,46 @@ module.exports = async function handler(req, res) {
 
     const drive = google.drive({ version: "v3", auth });
 
-    // Confirm the requested file is an image inside the approved folder.
-    const result = await drive.files.get({
-      fileId,
-      fields: "id,name,mimeType,parents,trashed",
-      supportsAllDrives: true,
-    });
+    let fileId = requestedFileId;
+    let file;
 
-    const file = result.data;
+    if (numberParam && !requestedFileId) {
+      // Find the numbered image only inside the approved Drive folder.
+      const result = await drive.files.list({
+        q: [
+          `'${FOLDER_ID}' in parents`,
+          "trashed = false",
+          "mimeType contains 'image/'",
+        ].join(" and "),
+        fields: "files(id,name,mimeType,parents,trashed)",
+        pageSize: 1000,
+        orderBy: "name",
+        supportsAllDrives: true,
+        includeItemsFromAllDrives: true,
+      });
+
+      const expectedName = `${Number(numberParam)}.png`;
+
+      file = (result.data.files || []).find(
+        item => item.name === expectedName
+      );
+
+      if (!file) {
+        return res.status(404).send("Image not found");
+      }
+
+      fileId = file.id;
+    } else {
+      // Verify a directly supplied ID belongs to the approved folder.
+      const result = await drive.files.get({
+        fileId,
+        fields: "id,name,mimeType,parents,trashed",
+        supportsAllDrives: true,
+      });
+
+      file = result.data;
+    }
+
     const isInFolder = (file.parents || []).includes(FOLDER_ID);
 
     if (
