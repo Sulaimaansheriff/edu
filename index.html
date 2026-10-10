@@ -4171,7 +4171,7 @@ if (source === "drive") {
                     resolve();
                 }, 15000);
 
-            const preload = new Image();
+            const preload = mvImg;
 
             const revealImage = () => {
 
@@ -4202,7 +4202,6 @@ if (source === "drive") {
                 }
 
                 hasLoadedFirstImage = true;
-                mvImg.src = u;
 
                 window.requestAnimationFrame(() => {
 
