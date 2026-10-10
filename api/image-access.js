@@ -1,3 +1,4 @@
+
 const crypto = require("crypto");
 const { google } = require("googleapis");
 
@@ -12,16 +13,17 @@ function createSignature(payload, secret) {
 }
 
 module.exports = async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Cache-Control", "no-store, private, max-age=0");
 
   if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
     return res.status(405).send("Method not allowed");
   }
 
-  const number = String(req.query.number || "");
+  const fileId = String(req.query.fileId || "");
 
-  if (!/^\d+$/.test(number)) {
-    return res.status(400).send("Invalid image number");
+  if (!/^[a-zA-Z0-9_-]+$/.test(fileId)) {
+    return res.status(400).send("Invalid image ID");
   }
 
   const privateKey = process.env.GOOGLE_PRIVATE_KEY;
@@ -45,29 +47,33 @@ module.exports = async function handler(req, res) {
 
     const drive = google.drive({ version: "v3", auth });
 
-    const result = await drive.files.list({
-      q: `'${FOLDER_ID}' in parents and trashed = false`,
-      fields: "files(id,name,mimeType)",
-      pageSize: 1000,
+    // Confirm the requested file is an image inside the approved folder.
+    const result = await drive.files.get({
+      fileId,
+      fields: "id,name,mimeType,parents,trashed",
       supportsAllDrives: true,
-      includeItemsFromAllDrives: true,
     });
 
-    const file = (result.data.files || []).find((item) => {
-      const match = item.name.match(/^(\d+)\.(png|jpe?g|webp|gif)$/i);
-      return match && match[1] === number && item.mimeType.startsWith("image/");
-    });
+    const file = result.data;
+    const isInFolder = (file.parents || []).includes(FOLDER_ID);
 
-    if (!file) {
+    if (
+      file.trashed ||
+      !isInFolder ||
+      !file.mimeType ||
+      !file.mimeType.startsWith("image/")
+    ) {
       return res.status(404).send("Image not found");
     }
 
-    const expires = Math.floor(Date.now() / 1000) + LINK_LIFETIME_SECONDS;
-    const payload = `${file.id}.${expires}`;
+    const expires =
+      Math.floor(Date.now() / 1000) + LINK_LIFETIME_SECONDS;
+
+    const payload = `${fileId}.${expires}`;
     const signature = createSignature(payload, signingSecret);
 
     return res.status(200).json({
-      url: `/api/drive-image/${file.id}?expires=${expires}&signature=${signature}`,
+      url: `/api/drive-image/${encodeURIComponent(fileId)}?expires=${expires}&signature=${signature}`,
       expires,
     });
   } catch (error) {
