@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/:filename([0-9]+\\.png)",
-      "destination": "/api/drive-image-by-name?filename=$1"
-    }
-  ]
-}
