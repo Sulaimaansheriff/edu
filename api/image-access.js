@@ -18,7 +18,6 @@ module.exports = function handler(req, res) {
     });
   }
 
-  // Only accept requests carrying your website's Referer.
   const referer = req.headers.referer;
 
   if (!referer) {
@@ -26,7 +25,10 @@ module.exports = function handler(req, res) {
   }
 
   try {
-    if (new URL(referer).origin !== "https://edu-phi-eight.vercel.app") {
+    if (
+      new URL(referer).origin !==
+      "https://edu-phi-eight.vercel.app"
+    ) {
       return res.status(403).json({ error: "Access denied" });
     }
   } catch {
@@ -40,8 +42,5 @@ module.exports = function handler(req, res) {
     .update(`image-access:${expires}`)
     .digest("hex");
 
-  return res.status(200).json({
-    token,
-    expires,
-  });
+  return res.status(200).json({ token, expires });
 };
