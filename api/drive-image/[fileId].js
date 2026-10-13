@@ -1,7 +1,6 @@
-```js
 const { google } = require("googleapis");
 
-const FOLDER_ID = "1GpTefSeAtcZ9bYkLNSgleHpRbX5DnYhP";
+const ALLOWED_FOLDER_ID = "1GpTefSeAtcZ9bYkLNSgleHpRbX5DnYhP";
 
 module.exports = async function handler(req, res) {
   res.setHeader("X-Content-Type-Options", "nosniff");
@@ -37,9 +36,7 @@ module.exports = async function handler(req, res) {
         client_email: clientEmail,
         private_key: privateKey.replace(/\\n/g, "\n"),
       },
-      scopes: [
-        "https://www.googleapis.com/auth/drive.readonly",
-      ],
+      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
     });
 
     const drive = google.drive({
@@ -47,7 +44,7 @@ module.exports = async function handler(req, res) {
       auth,
     });
 
-    // Verify that the requested file belongs to the approved folder.
+    // Confirm the file belongs to the approved folder.
     const metadataResponse = await drive.files.get({
       fileId,
       fields: "id,name,mimeType,parents,trashed",
@@ -58,14 +55,14 @@ module.exports = async function handler(req, res) {
 
     if (
       metadata.trashed ||
-      !(metadata.parents || []).includes(FOLDER_ID) ||
+      !(metadata.parents || []).includes(ALLOWED_FOLDER_ID) ||
       !metadata.mimeType ||
       !metadata.mimeType.startsWith("image/")
     ) {
-      return res.status(404).send("Image not found");
+      return res.status(403).send("Image access denied");
     }
 
-    // Stream the private image directly through this API.
+    // Stream the private image directly to the browser.
     const imageResponse = await drive.files.get(
       {
         fileId,
@@ -91,7 +88,7 @@ module.exports = async function handler(req, res) {
 
     imageResponse.data.pipe(res);
   } catch (error) {
-    console.error("Drive image error:", {
+    console.error("Google Drive image error:", {
       message: error.message,
       status: error.response?.status,
     });
@@ -111,4 +108,3 @@ module.exports = async function handler(req, res) {
     res.destroy(error);
   }
 };
-```
