@@ -1,39 +1,84 @@
 
 const { google } = require("googleapis");
+const crypto = require("crypto");
 
 const ALLOWED_FOLDER_ID =
   "1GpTefSeAtcZ9bYkLNSgleHpRbX5DnYhP";
 
+const ALLOWED_ORIGIN = "https://edu-phi-eight.vercel.app";
+
 module.exports = async function handler(req, res) {
+  res.setHeader("Cache-Control", "private, no-store");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Robots-Tag", "noindex, nofollow");
+
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return res.status(405).send("Method not allowed");
   }
 
   try {
-    const fileId = req.query.fileId;
-
-    
-    // Allow image requests only when they come from your website.
-    const allowedOrigin = "https://edu-phi-eight.vercel.app";
+    // Check the website Referer (a deterrent, not strong authentication).
     const referer = req.headers.referer;
 
     if (!referer) {
       return res.status(403).send("Access Denied");
     }
 
+    let refererUrl;
     try {
-      const refererUrl = new URL(referer);
-
-      if (refererUrl.origin !== allowedOrigin) {
-        return res.status(403).send("Access Denied");
-      }
+      refererUrl = new URL(referer);
     } catch {
       return res.status(403).send("Access Denied");
     }
 
+    if (refererUrl.origin !== ALLOWED_ORIGIN) {
+      return res.status(403).send("Access Denied");
+    }
+
+    // Require a valid, unexpired server-signed token.
+    const secret = process.env.IMAGE_SIGNING_SECRET;
+    const { token, expires } = req.query;
+
+    if (
+      !secret ||
+      typeof token !== "string" ||
+      typeof expires !== "string" ||
+      !/^\d+$/.test(expires)
+    ) {
+      return res.status(403).send("Access Denied");
+    }
+
+    const expiry = Number(expires);
+    const now = Math.floor(Date.now() / 1000);
+
+    // Tokens are valid for at most five minutes.
+    if (
+      !Number.isSafeInteger(expiry) ||
+      expiry <= now ||
+      expiry > now + 300
+    ) {
+      return res.status(403).send("Access Denied");
+    }
+
+    const expectedToken = crypto
+      .createHmac("sha256", secret)
+      .update(`image-access:${expiry}`)
+      .digest("hex");
+
+    const tokenBuffer = Buffer.from(token, "hex");
+    const expectedBuffer = Buffer.from(expectedToken, "hex");
+
+    if (
+      tokenBuffer.length !== expectedBuffer.length ||
+      !crypto.timingSafeEqual(tokenBuffer, expectedBuffer)
+    ) {
+      return res.status(403).send("Access Denied");
+    }
 
     // Validate the Google Drive file ID.
+    const fileId = req.query.fileId;
+
     if (
       typeof fileId !== "string" ||
       !/^[a-zA-Z0-9_-]+$/.test(fileId)
@@ -41,7 +86,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).send("Invalid image ID");
     }
 
-    // Read credentials from Vercel environment variables.
+    // Read Google credentials from Vercel environment variables.
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
     const projectId = process.env.GOOGLE_PROJECT_ID;
@@ -51,7 +96,6 @@ module.exports = async function handler(req, res) {
       return res.status(500).send("Server configuration error");
     }
 
-    // Authenticate with Google Drive.
     const auth = new google.auth.GoogleAuth({
       credentials: {
         project_id: projectId,
@@ -68,8 +112,7 @@ module.exports = async function handler(req, res) {
       auth,
     });
 
-    // Retrieve metadata and verify the file belongs
-    // directly to the approved images folder.
+    // Verify that the image belongs to the approved folder.
     const metadataResponse = await drive.files.get({
       fileId,
       fields: "id,name,mimeType,parents",
@@ -78,13 +121,10 @@ module.exports = async function handler(req, res) {
 
     const metadata = metadataResponse.data;
 
-    if (
-      !(metadata.parents || []).includes(ALLOWED_FOLDER_ID)
-    ) {
+    if (!(metadata.parents || []).includes(ALLOWED_FOLDER_ID)) {
       return res.status(403).send("Image access denied");
     }
 
-    // Accept image files only.
     if (
       !metadata.mimeType ||
       !metadata.mimeType.startsWith("image/")
@@ -105,11 +145,6 @@ module.exports = async function handler(req, res) {
     );
 
     res.setHeader("Content-Type", metadata.mimeType);
-
-    // Do not let shared caches retain private images.
-    res.setHeader("Cache-Control", "private, no-store");
-    res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("X-Robots-Tag", "noindex, nofollow");
 
     imageResponse.data.on("error", (error) => {
       console.error("Google Drive image stream error:", error.message);
