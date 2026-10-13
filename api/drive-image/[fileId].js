@@ -13,6 +13,26 @@ module.exports = async function handler(req, res) {
   try {
     const fileId = req.query.fileId;
 
+    
+    // Allow image requests only when they come from your website.
+    const allowedOrigin = "https://edu-phi-eight.vercel.app";
+    const referer = req.headers.referer;
+
+    if (!referer) {
+      return res.status(403).send("Access Denied");
+    }
+
+    try {
+      const refererUrl = new URL(referer);
+
+      if (refererUrl.origin !== allowedOrigin) {
+        return res.status(403).send("Access Denied");
+      }
+    } catch {
+      return res.status(403).send("Access Denied");
+    }
+
+
     // Validate the Google Drive file ID.
     if (
       typeof fileId !== "string" ||
