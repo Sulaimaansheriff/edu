@@ -3287,8 +3287,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     "img"
                 );
 
-            im.src = u;
             im.alt = "";
+
+            // Sign Drive image URLs so the thumbnail endpoint accepts them.
+            getSignedImageUrl(u)
+                .then(signedUrl => {
+                    if (im.isConnected) {
+                        im.src = signedUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error("Thumbnail image access error:", error);
+                });
 
             t.appendChild(im);
 
@@ -3773,6 +3783,38 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    async function getSignedImageUrl(url) {
+        // Local public/static images do not need a token.
+        if (!url.includes("/api/drive-image/")) {
+            return url;
+        }
+
+        const response = await fetch("/api/image-access", {
+            method: "GET",
+            cache: "no-store",
+            credentials: "same-origin"
+        });
+
+        if (!response.ok) {
+            throw new Error("Could not obtain image access token");
+        }
+
+        const data = await response.json();
+
+        if (
+            typeof data.token !== "string" ||
+            typeof data.expires !== "number"
+        ) {
+            throw new Error("Invalid image access token response");
+        }
+
+        const signedUrl = new URL(url, window.location.origin);
+        signedUrl.searchParams.set("token", data.token);
+        signedUrl.searchParams.set("expires", String(data.expires));
+
+        return signedUrl.toString();
+    }
+
     async function urlExists(url) {
 
         return new Promise(resolve => {
@@ -4043,7 +4085,7 @@ if (source === "drive") {
                     ? `${i + 1} / ${urls.length}`
                     : " ";
 
-            const u =
+            let u =
                 urls[i];
 
             fitScale = 1;
@@ -4212,7 +4254,28 @@ if (source === "drive") {
 
             preload.onload = handleLoad;
             preload.onerror = handleError;
-            preload.src = u;
+
+            // Fetch a fresh short-lived token each time a Drive image opens.
+            (async () => {
+                try {
+                    u = await getSignedImageUrl(u);
+
+                    if (
+                        settled ||
+                        requestId !== loadRequestId ||
+                        !isOpen
+                    ) {
+                        finish();
+                        resolve();
+                        return;
+                    }
+
+                    preload.src = u;
+                } catch (error) {
+                    console.error("Image access token error:", error);
+                    handleError();
+                }
+            })();
         });
     }
 
