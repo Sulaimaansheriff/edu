@@ -4323,8 +4323,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             const preload = new Image();
+            let refreshedAfterImageError = false;
 
-            timeoutId = window.setTimeout(timeout, 20000);
+            timeoutId = window.setTimeout(timeout, 30000);
 
             const revealImage = () => {
                 if (settled || !isCurrent()) return;
@@ -4373,7 +4374,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (settled || !isCurrent()) return;
                 revealImage();
             };
-            preload.onerror = fail;
+            preload.onerror = async () => {
+                // A signed URL can expire or a transient request can fail. Get
+                // one fresh token and try the same protected endpoint once.
+                if (settled || !isCurrent()) return;
+                if (refreshedAfterImageError) {
+                    fail();
+                    return;
+                }
+                refreshedAfterImageError = true;
+                try {
+                    const freshUrl = await getCachedImageObjectUrl(originalUrl, true);
+                    if (settled || !isCurrent()) return;
+                    preload.src = freshUrl;
+                } catch (error) {
+                    console.error("Could not refresh image access:", error);
+                    fail();
+                }
+            };
 
             (async () => {
                 try {
