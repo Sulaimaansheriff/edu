@@ -1191,33 +1191,6 @@
             object-fit: cover;
         }
 
-        .mv-thumb.failed img {
-            opacity: 0;
-        }
-
-        .mv-thumb.failed::after,
-        .mv-thumb.loading::after {
-            position: absolute;
-            inset: 0;
-            display: grid;
-            place-items: center;
-            padding: 4px;
-            background: rgba(255,255,255,0.94);
-            color: #111;
-            font-size: 9px;
-            font-weight: 800;
-            line-height: 1.2;
-            text-align: center;
-        }
-
-        .mv-thumb.failed::after {
-            content: "↻ Retry Image";
-        }
-
-        .mv-thumb.loading::after {
-            content: "Loading…";
-        }
-
         .mv-thumb.active {
             border-color: rgba(var(--accent-rgb), 0.55);
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.16);
@@ -3373,77 +3346,34 @@ document.addEventListener("DOMContentLoaded", () => {
         urls.forEach((u, i) => {
             const t = document.createElement("button");
             t.type = "button";
-            t.className = "mv-thumb" + (i === idx ? " active" : " loading");
+            t.className = "mv-thumb" + (i === idx ? " active" : "");
             t.setAttribute("aria-label", `Open image ${i + 1}`);
 
             const im = document.createElement("img");
-            // Preserve the original protected API URL for reference; the src is
-            // an in-memory blob URL only after the signed fetch succeeds.
             im.dataset.originalUrl = u;
             im.alt = "";
             im.loading = "eager";
             im.decoding = "async";
+            im.fetchPriority = "high";
             t.appendChild(im);
-
-            let requestId = 0;
-
-            const markLoaded = () => {
-                t.classList.remove("failed", "loading");
-                t.disabled = false;
-                t.setAttribute("aria-label", `Open image ${i + 1}`);
-            };
-
-            const markFailed = () => {
-                // Keep the error recoverable: a slow request may still finish later.
-                t.classList.remove("loading");
-                t.classList.add("failed");
-                t.disabled = false;
-                t.setAttribute("aria-label", `Retry image ${i + 1}`);
-            };
-
-            im.onload = markLoaded;
-            im.onerror = markFailed;
-
-            const loadThumbnail = async (retry = false) => {
-                const thisRequest = ++requestId;
-                t.classList.add("loading");
-                t.classList.remove("failed");
-                t.disabled = true;
-
-                try {
-                    const objectUrl = await getCachedImageObjectUrl(u, retry);
-                    if (thisRequest !== requestId || !t.isConnected) return;
-
-                    // Reusing the page-memory object URL means the thumbnail uses
-                    // the same downloaded bytes as the viewer and background cache.
-                    im.src = objectUrl;
-                    if (im.complete && im.naturalWidth > 0) markLoaded();
-                } catch (error) {
-                    if (thisRequest !== requestId || !t.isConnected) return;
-                    markFailed();
-                    console.warn(`Thumbnail ${i + 1} failed to load:`, error);
-                }
-            };
-
             t.addEventListener("click", (e) => {
                 e.stopPropagation();
-                if (t.classList.contains("failed")) {
-                    loadThumbnail(true);
-                    return;
-                }
                 goTo(i);
             });
-
             mvThumbs.appendChild(t);
-            // Start every thumbnail immediately. Calls share the same pending
-            // download/cache entry, so navigation is not required to populate them.
-            loadThumbnail();
+
+            // Start every thumbnail request immediately. Keep img.src on the
+            // protected /api/drive-image URL (with its short-lived access token),
+            // never on a blob: URL. Failures remain visually quiet.
+            getCachedImageObjectUrl(u).then(signedUrl => {
+                if (t.isConnected) im.src = signedUrl;
+            }).catch(error => {
+                console.warn(`Thumbnail ${i + 1} failed to load:`, error);
+            });
         });
 
         if (userZoom <= 1.001) setThumbsVisible(true);
-    }
-
-    function markActiveThumb() {
+    }    function markActiveThumb() {
 
         const thumbs =
             mvThumbs.querySelectorAll(
@@ -3980,8 +3910,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Page-lifetime image cache. Blob URLs stay in memory and are discarded
-    // automatically when this page is refreshed or closed.
+    // Page-memory cache of short-lived signed direct API URLs. The img elements
+    // use the original protected endpoint, not blob: URLs. Refresh URLs before
+    // their five-minute server-side expiry.
     const imageObjectUrlCache = new Map();
     const imageObjectUrlPending = new Map();
 
@@ -3991,39 +3922,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const cacheKey = new URL(originalUrl, window.location.href).href;
-
-        if (retry) {
-            // Do not revoke an object URL that may still be assigned to a visible
-            // viewer or thumbnail. Remove it from the cache for a fresh retry;
-            // the browser releases remaining object URLs when this page unloads.
-            imageObjectUrlCache.delete(cacheKey);
-        } else {
+        const now = Date.now();
+        if (retry) imageObjectUrlCache.delete(cacheKey);
+        else {
             const cached = imageObjectUrlCache.get(cacheKey);
-            if (cached) return cached;
+            if (cached && cached.expiresAt > now + 15000) return cached.url;
             const pending = imageObjectUrlPending.get(cacheKey);
             if (pending) return pending;
         }
 
         const pendingPromise = (async () => {
             const signedUrl = await getSignedImageUrl(cacheKey, retry);
-            const response = await fetchWithTimeout(signedUrl, {
-                method: "GET",
-                cache: "no-store",
-                credentials: "same-origin"
-            }, 90000);
-
-            if (!response.ok) {
-                throw new Error(`Image request failed (${response.status})`);
-            }
-
-            const blob = await response.blob();
-            if (!blob.size || !blob.type.startsWith("image/")) {
-                throw new Error("The server did not return a valid image");
-            }
-
-            const objectUrl = URL.createObjectURL(blob);
-            imageObjectUrlCache.set(cacheKey, objectUrl);
-            return objectUrl;
+            imageObjectUrlCache.set(cacheKey, {
+                url: signedUrl,
+                expiresAt: now + 240000
+            });
+            return signedUrl;
         })();
 
         imageObjectUrlPending.set(cacheKey, pendingPromise);
@@ -4376,8 +4290,6 @@ document.addEventListener("DOMContentLoaded", () => {
             mvImg.style.visibility = "hidden";
 
             const startedAt = performance.now();
-            const cacheKeyForCurrentImage = new URL(originalUrl, window.location.href).href;
-            const minimumLoadingMs = imageObjectUrlCache.has(cacheKeyForCurrentImage) ? 0 : 250;
             let revealTimer = null;
             let timeoutId = null;
             let settled = false;
@@ -4452,35 +4364,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 mvImg.onerror = fail;
-                // Use the exact signed URL that the preload successfully fetched.
-                // Do not inspect mvImg.complete immediately after changing src:
-                // some browsers can still report the previous image's completed
-                // state during a source change, which can falsely settle a new load.
+                // Keep the visible image on the direct signed API URL.
                 const displayUrl = preload.currentSrc || preload.src;
                 mvImg.src = displayUrl;
             };
 
             preload.onload = () => {
                 if (settled || !isCurrent()) return;
-                const elapsed = performance.now() - startedAt;
-                const delay = Math.max(0, minimumLoadingMs - elapsed);
-                if (delay > 0) {
-                    revealTimer = window.setTimeout(revealImage, delay);
-                } else {
-                    revealImage();
-                }
+                revealImage();
             };
             preload.onerror = fail;
 
             (async () => {
                 try {
-                    const cachedUrl = await getCachedImageObjectUrl(originalUrl, retry);
+                    const directUrl = await getCachedImageObjectUrl(originalUrl, retry);
                     if (settled || !isCurrent()) {
                         finish();
                         resolve();
                         return;
                     }
-                    preload.src = cachedUrl;
+                    preload.src = directUrl;
                 } catch (error) {
                     console.error("Could not prepare image URL:", error);
                     fail();
