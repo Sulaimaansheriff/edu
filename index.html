@@ -4457,8 +4457,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                hasLoadedFirstImage = true;
-                mvImg.src = u;
+                
+hasLoadedFirstImage = true;
+mvImg.src = preload.src;
+
 
                 window.requestAnimationFrame(() => {
 
