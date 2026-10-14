@@ -3383,17 +3383,14 @@ document.addEventListener("DOMContentLoaded", () => {
             t.appendChild(im);
 
             let requestId = 0;
-            let timeoutId = null;
 
             const markLoaded = () => {
-                window.clearTimeout(timeoutId);
                 t.classList.remove("failed", "loading");
                 t.disabled = false;
                 t.setAttribute("aria-label", `Open image ${i + 1}`);
             };
 
             const markFailed = () => {
-                window.clearTimeout(timeoutId);
                 // Keep the error recoverable: a slow request may still finish later.
                 t.classList.remove("loading");
                 t.classList.add("failed");
@@ -3406,20 +3403,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const loadThumbnail = async (retry = false) => {
                 const thisRequest = ++requestId;
-                window.clearTimeout(timeoutId);
                 t.classList.add("loading");
                 t.classList.remove("failed");
                 t.disabled = true;
-
-                // Do not permanently fail a thumbnail at 12 seconds: the shared
-                // image fetch may still be downloading in the background.
-                timeoutId = window.setTimeout(() => {
-                    if (thisRequest !== requestId || !t.isConnected) return;
-                    t.classList.remove("loading");
-                    t.classList.add("failed");
-                    t.disabled = false;
-                    t.setAttribute("aria-label", `Retry image ${i + 1}`);
-                }, 35000);
 
                 try {
                     const objectUrl = await getCachedImageObjectUrl(u, retry);
@@ -4021,7 +4007,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: "GET",
                 cache: "no-store",
                 credentials: "same-origin"
-            }, 25000);
+            }, 90000);
 
             if (!response.ok) {
                 throw new Error(`Image request failed (${response.status})`);
