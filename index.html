@@ -3363,158 +3363,95 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderThumbs() {
-
         mvThumbs.innerHTML = "";
 
         if (urls.length <= 1) {
-
             setThumbsVisible(false);
             return;
         }
 
         urls.forEach((u, i) => {
-
-            const t =
-                document.createElement(
-                    "button"
-                );
-
+            const t = document.createElement("button");
             t.type = "button";
+            t.className = "mv-thumb" + (i === idx ? " active" : " loading");
+            t.setAttribute("aria-label", `Open image ${i + 1}`);
 
-            t.className =
-                "mv-thumb" +
-                (
-                    i === idx
-                        ? " active"
-                        : ""
-                );
-
-            t.setAttribute(
-                "aria-label",
-                `Open image ${i + 1}`
-            );
-
-            const im =
-                document.createElement(
-                    "img"
-                );
-
+            const im = document.createElement("img");
             im.alt = "";
-
+            im.loading = "eager";
+            im.decoding = "async";
             t.appendChild(im);
 
-            let thumbnailRequestId = 0;
+            let requestId = 0;
+            let timeoutId = null;
+
+            const markLoaded = () => {
+                window.clearTimeout(timeoutId);
+                t.classList.remove("failed", "loading");
+                t.disabled = false;
+                t.setAttribute("aria-label", `Open image ${i + 1}`);
+            };
+
+            const markFailed = () => {
+                window.clearTimeout(timeoutId);
+                // Keep the error recoverable: a slow request may still finish later.
+                t.classList.remove("loading");
+                t.classList.add("failed");
+                t.disabled = false;
+                t.setAttribute("aria-label", `Retry image ${i + 1}`);
+            };
+
+            im.onload = markLoaded;
+            im.onerror = markFailed;
 
             const loadThumbnail = async (retry = false) => {
+                const thisRequest = ++requestId;
+                window.clearTimeout(timeoutId);
+                t.classList.add("loading");
+                t.classList.remove("failed");
+                t.disabled = true;
 
-                const requestId =
-                    ++thumbnailRequestId;
-
-                let settled = false;
-
-                if (retry) {
-                    t.classList.add("loading");
-                    t.classList.remove("failed");
-                    t.disabled = true;
-                }
-
-                const timeoutId = window.setTimeout(() => {
-                    failThumbnail();
-                }, 12000);
-
-                const finishThumbnail = () => {
-                    if (settled) return false;
-
-                    settled = true;
-                    window.clearTimeout(timeoutId);
-                    return true;
-                };
-
-                const failThumbnail = () => {
-                    if (
-                        requestId !== thumbnailRequestId ||
-                        !t.isConnected ||
-                        !finishThumbnail()
-                    ) {
-                        return;
-                    }
-
+                // Do not permanently fail a thumbnail at 12 seconds: the shared
+                // image fetch may still be downloading in the background.
+                timeoutId = window.setTimeout(() => {
+                    if (thisRequest !== requestId || !t.isConnected) return;
                     t.classList.remove("loading");
                     t.classList.add("failed");
                     t.disabled = false;
-                    t.setAttribute(
-                        "aria-label",
-                        `Retry image ${i + 1}`
-                    );
-                };
-
-                const preload = new Image();
-
-                preload.onload = () => {
-                    if (
-                        requestId !== thumbnailRequestId ||
-                        !t.isConnected ||
-                        !finishThumbnail()
-                    ) {
-                        return;
-                    }
-
-                    im.src = preload.src;
-                    t.classList.remove("failed", "loading");
-                    t.disabled = false;
-                    t.setAttribute(
-                        "aria-label",
-                        `Open image ${i + 1}`
-                    );
-                };
-
-                preload.onerror = failThumbnail;
+                    t.setAttribute("aria-label", `Retry image ${i + 1}`);
+                }, 35000);
 
                 try {
-                    const cachedUrl =
-                        await getCachedImageObjectUrl(u, retry);
+                    const objectUrl = await getCachedImageObjectUrl(u, retry);
+                    if (thisRequest !== requestId || !t.isConnected) return;
 
-                    if (
-                        requestId !== thumbnailRequestId ||
-                        !t.isConnected
-                    ) {
-                        finishThumbnail();
-                        return;
-                    }
-
-                    preload.src = cachedUrl;
-                } catch {
-                    failThumbnail();
+                    // Reusing the page-memory object URL means the thumbnail uses
+                    // the same downloaded bytes as the viewer and background cache.
+                    im.src = objectUrl;
+                    if (im.complete && im.naturalWidth > 0) markLoaded();
+                } catch (error) {
+                    if (thisRequest !== requestId || !t.isConnected) return;
+                    markFailed();
+                    console.warn(`Thumbnail ${i + 1} failed to load:`, error);
                 }
             };
 
-            t.addEventListener(
-                "click",
-                (e) => {
-
-                    e.stopPropagation();
-
-                    if (t.classList.contains("failed")) {
-                        loadThumbnail(true);
-                        return;
-                    }
-
-                    goTo(i);
-
+            t.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (t.classList.contains("failed")) {
+                    loadThumbnail(true);
+                    return;
                 }
-            );
+                goTo(i);
+            });
 
             mvThumbs.appendChild(t);
+            // Start every thumbnail immediately. Calls share the same pending
+            // download/cache entry, so navigation is not required to populate them.
             loadThumbnail();
-
         });
 
-        /*
-           Opening/default state.
-        */
-        if (userZoom <= 1.001) {
-            setThumbsVisible(true);
-        }
+        if (userZoom <= 1.001) setThumbsVisible(true);
     }
 
     function markActiveThumb() {
