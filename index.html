@@ -3471,8 +3471,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 preload.onerror = failThumbnail;
 
                 try {
-                    const signedUrl =
-                        await getSignedImageUrl(u, retry);
+                    const cachedUrl =
+                        await getCachedImageObjectUrl(u, retry);
 
                     if (
                         requestId !== thumbnailRequestId ||
@@ -3482,7 +3482,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    preload.src = signedUrl;
+                    preload.src = cachedUrl;
                 } catch {
                     failThumbnail();
                 }
@@ -4053,6 +4053,63 @@ document.addEventListener("DOMContentLoaded", () => {
             : signedUrl.toString();
     }
 
+
+    // Page-lifetime image cache. Blob URLs stay in memory and are discarded
+    // automatically when this page is refreshed or closed.
+    const imageObjectUrlCache = new Map();
+    const imageObjectUrlPending = new Map();
+
+    async function getCachedImageObjectUrl(originalUrl, retry = false) {
+        if (typeof originalUrl !== "string" || !originalUrl.trim()) {
+            throw new Error("Invalid image URL");
+        }
+
+        const cacheKey = new URL(originalUrl, window.location.href).href;
+
+        if (retry) {
+            const oldObjectUrl = imageObjectUrlCache.get(cacheKey);
+            if (oldObjectUrl) URL.revokeObjectURL(oldObjectUrl);
+            imageObjectUrlCache.delete(cacheKey);
+            imageObjectUrlPending.delete(cacheKey);
+        } else {
+            const cached = imageObjectUrlCache.get(cacheKey);
+            if (cached) return cached;
+            const pending = imageObjectUrlPending.get(cacheKey);
+            if (pending) return pending;
+        }
+
+        const pendingPromise = (async () => {
+            const signedUrl = await getSignedImageUrl(cacheKey, retry);
+            const response = await fetchWithTimeout(signedUrl, {
+                method: "GET",
+                cache: "no-store",
+                credentials: "same-origin"
+            }, 25000);
+
+            if (!response.ok) {
+                throw new Error(`Image request failed (${response.status})`);
+            }
+
+            const blob = await response.blob();
+            if (!blob.size || !blob.type.startsWith("image/")) {
+                throw new Error("The server did not return a valid image");
+            }
+
+            const objectUrl = URL.createObjectURL(blob);
+            imageObjectUrlCache.set(cacheKey, objectUrl);
+            return objectUrl;
+        })();
+
+        imageObjectUrlPending.set(cacheKey, pendingPromise);
+        try {
+            return await pendingPromise;
+        } finally {
+            if (imageObjectUrlPending.get(cacheKey) === pendingPromise) {
+                imageObjectUrlPending.delete(cacheKey);
+            }
+        }
+    }
+
     async function fetchDriveImageList(images) {
 
         const response = await fetchWithTimeout(
@@ -4229,6 +4286,17 @@ document.addEventListener("DOMContentLoaded", () => {
             setStatus("");
             updateArrows();
             renderThumbs();
+
+            // Warm the in-memory cache in the background so forward/back
+            // navigation and thumbnails reuse the same downloaded image bytes.
+            urls.forEach((imageUrl, imageIndex) => {
+                if (imageIndex !== idx) {
+                    getCachedImageObjectUrl(imageUrl).catch(error => {
+                        console.warn("Background image prefetch failed:", error);
+                    });
+                }
+            });
+
             await loadImageAt(idx);
         };
 
@@ -4382,7 +4450,8 @@ document.addEventListener("DOMContentLoaded", () => {
             mvImg.style.visibility = "hidden";
 
             const startedAt = performance.now();
-            const minimumLoadingMs = 250;
+            const cacheKeyForCurrentImage = new URL(originalUrl, window.location.href).href;
+            const minimumLoadingMs = imageObjectUrlCache.has(cacheKeyForCurrentImage) ? 0 : 250;
             let revealTimer = null;
             let timeoutId = null;
             let settled = false;
@@ -4479,13 +4548,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             (async () => {
                 try {
-                    const signedUrl = await getSignedImageUrl(originalUrl, retry);
+                    const cachedUrl = await getCachedImageObjectUrl(originalUrl, retry);
                     if (settled || !isCurrent()) {
                         finish();
                         resolve();
                         return;
                     }
-                    preload.src = signedUrl;
+                    preload.src = cachedUrl;
                 } catch (error) {
                     console.error("Could not prepare image URL:", error);
                     fail();
