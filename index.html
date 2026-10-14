@@ -1191,6 +1191,33 @@
             object-fit: cover;
         }
 
+        .mv-thumb.failed img {
+            opacity: 0;
+        }
+
+        .mv-thumb.failed::after,
+        .mv-thumb.loading::after {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 4px;
+            background: rgba(255,255,255,0.94);
+            color: #111;
+            font-size: 9px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .mv-thumb.failed::after {
+            content: "↻ Retry Image";
+        }
+
+        .mv-thumb.loading::after {
+            content: "Retrying…";
+        }
+
         .mv-thumb.active {
             border-color: rgba(var(--accent-rgb), 0.55);
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.16);
@@ -1460,13 +1487,35 @@
             top: 50%;
             transform: translate(-50%,-50%);
             padding: 10px 14px;
-            border-radius: 999px;
+            border-radius: 12px;
             border: 1px solid rgba(0,0,0,0.10);
             background: #ffffff;
             color: rgba(0,0,0,0.60);
             font-size: 11px;
             font-weight: 900;
             z-index: 15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            max-width: calc(100% - 32px);
+            text-align: center;
+        }
+
+        .mv-retry-button {
+            min-height: 36px;
+            padding: 0 12px;
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 9px;
+            background: #ffffff;
+            color: #111;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .mv-retry-button:disabled {
+            cursor: wait;
+            opacity: 0.65;
         }
     </style>
 </head>
@@ -2012,7 +2061,10 @@
         <div class="mv-body" id="mvBody">
 
             <div class="mv-status" id="mvStatus" style="display:none;">
-                Loading…
+                <span id="mvStatusText">Loading…</span>
+                <button class="mv-retry-button" id="mvRetryButton" type="button" hidden>
+                    ↻ Retry Image
+                </button>
             </div>
 
             <button class="mv-arrow prev hidden" id="mvPrev" type="button" aria-label="Previous image">
@@ -2216,8 +2268,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             eduDrag = {
                 pointerId: e.pointerId,
-                y: e.clientY,
-                scrollTop: scrollBox.scrollTop
+                y: e.clientY
             };
 
             scrollBox.setPointerCapture(
@@ -2243,12 +2294,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const dy =
-                e.clientY - eduDrag.y;
+            const scrollDelta =
+                eduDrag.y - e.clientY;
 
-            if (Math.abs(dy) > 3) {
+            eduDrag.y = e.clientY;
+
+            if (scrollDelta) {
+                const previousScrollTop =
+                    scrollBox.scrollTop;
+
+                const maxScrollTop =
+                    scrollBox.scrollHeight -
+                    scrollBox.clientHeight;
+
                 scrollBox.scrollTop =
-                    eduDrag.scrollTop - dy;
+                    Math.max(
+                        0,
+                        Math.min(
+                            maxScrollTop,
+                            previousScrollTop + scrollDelta
+                        )
+                    );
+
+                const unusedDelta =
+                    scrollDelta -
+                    (scrollBox.scrollTop - previousScrollTop);
+
+                if (unusedDelta) {
+                    window.scrollBy({
+                        top: unusedDelta,
+                        left: 0,
+                        behavior: "auto"
+                    });
+                }
             }
 
             e.preventDefault();
@@ -2754,9 +2832,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             certDrag = {
                 pointerId: e.pointerId,
-                x: e.clientX,
-                y: e.clientY,
-                scrollTop: scrollBox.scrollTop
+                startX: e.clientX,
+                startY: e.clientY,
+                lastY: e.clientY,
+                vertical: false
             };
 
             scrollBox.setPointerCapture(
@@ -2780,18 +2859,53 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const dx =
-                e.clientX - certDrag.x;
+            const totalX =
+                e.clientX - certDrag.startX;
 
-            const dy =
-                e.clientY - certDrag.y;
+            const totalY =
+                e.clientY - certDrag.startY;
 
             if (
-                Math.abs(dy) > 3 &&
-                Math.abs(dy) > Math.abs(dx)
+                !certDrag.vertical &&
+                Math.abs(totalY) > 3 &&
+                Math.abs(totalY) > Math.abs(totalX)
             ) {
+                certDrag.vertical = true;
+            }
+
+            if (certDrag.vertical) {
+                const scrollDelta =
+                    certDrag.lastY - e.clientY;
+
+                certDrag.lastY = e.clientY;
+
+                const previousScrollTop =
+                    scrollBox.scrollTop;
+
+                const maxScrollTop =
+                    scrollBox.scrollHeight -
+                    scrollBox.clientHeight;
+
                 scrollBox.scrollTop =
-                    certDrag.scrollTop - dy;
+                    Math.max(
+                        0,
+                        Math.min(
+                            maxScrollTop,
+                            previousScrollTop + scrollDelta
+                        )
+                    );
+
+                const unusedDelta =
+                    scrollDelta -
+                    (scrollBox.scrollTop - previousScrollTop);
+
+                if (unusedDelta) {
+                    window.scrollBy({
+                        top: unusedDelta,
+                        left: 0,
+                        behavior: "auto"
+                    });
+                }
             }
 
             e.preventDefault();
@@ -2827,39 +2941,6 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollBox.addEventListener(
         "pointercancel",
         endCertDrag
-    );
-
-    /*
-       Desktop mouse wheel chaining.
-    */
-    scrollBox.addEventListener(
-        "wheel",
-        (e) => {
-
-            const atTop =
-                scrollBox.scrollTop <= 0;
-
-            const atBottom =
-                scrollBox.scrollTop +
-                scrollBox.clientHeight >=
-                scrollBox.scrollHeight - 1;
-
-            if (
-                (atTop && e.deltaY < 0) ||
-                (atBottom && e.deltaY > 0)
-            ) {
-
-                e.preventDefault();
-
-                window.scrollBy({
-                    top: e.deltaY,
-                    left: 0,
-                    behavior: "auto"
-                });
-            }
-
-        },
-        { passive: false }
     );
 
     /*
@@ -3056,6 +3137,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const mvStatus =
         document.getElementById("mvStatus");
 
+    const mvStatusText =
+        document.getElementById("mvStatusText");
+
+    const mvRetryButton =
+        document.getElementById("mvRetryButton");
+
     const mvZoomOut =
         document.getElementById("mvZoomOut");
 
@@ -3094,6 +3181,8 @@ document.addEventListener("DOMContentLoaded", () => {
         700,
         800
     ];
+
+    let imageRetrySequence = 0;
 
     let urls = [];
     let idx = 0;
@@ -3164,20 +3253,43 @@ document.addEventListener("DOMContentLoaded", () => {
         return fitScale * userZoom;
     }
 
-    function setStatus(text) {
+    function setStatus(
+        text,
+        retryAction = null,
+        retryLabel = "↻ Retry Image",
+        retrying = false
+    ) {
 
         if (!text) {
             mvStatus.style.display =
                 "none";
 
+            mvRetryButton.hidden = true;
+            mvRetryButton.disabled = false;
+            mvRetryButton.onclick = null;
+
             return;
         }
 
-        mvStatus.textContent =
+        mvStatusText.textContent =
             text;
 
+        mvRetryButton.hidden =
+            !retryAction;
+
+        mvRetryButton.disabled =
+            retrying;
+
+        mvRetryButton.textContent =
+            retrying
+                ? "Retrying…"
+                : retryLabel;
+
+        mvRetryButton.onclick =
+            retryAction;
+
         mvStatus.style.display =
-            "block";
+            "flex";
     }
 
     function setThumbsVisible(visible) {
@@ -3289,18 +3401,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
             im.alt = "";
 
-            // Sign Drive image URLs so the thumbnail endpoint accepts them.
-            getSignedImageUrl(u)
-                .then(signedUrl => {
-                    if (im.isConnected) {
-                        im.src = signedUrl;
-                    }
-                })
-                .catch(error => {
-                    console.error("Thumbnail image access error:", error);
-                });
-
             t.appendChild(im);
+
+            let thumbnailRequestId = 0;
+
+            const loadThumbnail = async (retry = false) => {
+
+                const requestId =
+                    ++thumbnailRequestId;
+
+                let settled = false;
+
+                if (retry) {
+                    t.classList.add("loading");
+                    t.classList.remove("failed");
+                    t.disabled = true;
+                }
+
+                const timeoutId = window.setTimeout(() => {
+                    failThumbnail();
+                }, 12000);
+
+                const finishThumbnail = () => {
+                    if (settled) return false;
+
+                    settled = true;
+                    window.clearTimeout(timeoutId);
+                    return true;
+                };
+
+                const failThumbnail = () => {
+                    if (
+                        requestId !== thumbnailRequestId ||
+                        !t.isConnected ||
+                        !finishThumbnail()
+                    ) {
+                        return;
+                    }
+
+                    t.classList.remove("loading");
+                    t.classList.add("failed");
+                    t.disabled = false;
+                    t.setAttribute(
+                        "aria-label",
+                        `Retry image ${i + 1}`
+                    );
+                };
+
+                const preload = new Image();
+
+                preload.onload = () => {
+                    if (
+                        requestId !== thumbnailRequestId ||
+                        !t.isConnected ||
+                        !finishThumbnail()
+                    ) {
+                        return;
+                    }
+
+                    im.src = preload.src;
+                    t.classList.remove("failed", "loading");
+                    t.disabled = false;
+                    t.setAttribute(
+                        "aria-label",
+                        `Open image ${i + 1}`
+                    );
+                };
+
+                preload.onerror = failThumbnail;
+
+                try {
+                    const signedUrl =
+                        await getSignedImageUrl(u, retry);
+
+                    if (
+                        requestId !== thumbnailRequestId ||
+                        !t.isConnected
+                    ) {
+                        finishThumbnail();
+                        return;
+                    }
+
+                    preload.src = signedUrl;
+                } catch {
+                    failThumbnail();
+                }
+            };
 
             t.addEventListener(
                 "click",
@@ -3308,12 +3494,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     e.stopPropagation();
 
+                    if (t.classList.contains("failed")) {
+                        loadThumbnail(true);
+                        return;
+                    }
+
                     goTo(i);
 
                 }
             );
 
             mvThumbs.appendChild(t);
+            loadThumbnail();
 
         });
 
@@ -3783,17 +3975,61 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    async function getSignedImageUrl(url) {
-        // Local public/static images do not need a token.
-        if (!url.includes("/api/drive-image/")) {
-            return url;
+    async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
+
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(
+            () => controller.abort(),
+            timeoutMs
+        );
+
+        try {
+            return await fetch(url, {
+                ...options,
+                signal: controller.signal
+            });
+        } finally {
+            window.clearTimeout(timeoutId);
+        }
+    }
+
+    function addRetryParameter(url) {
+
+        const retryUrl =
+            new URL(url, window.location.href);
+
+        retryUrl.searchParams.set(
+            "retry",
+            `${Date.now()}-${++imageRetrySequence}`
+        );
+
+        return retryUrl.toString();
+    }
+
+    async function getSignedImageUrl(url, retry = false) {
+
+        if (typeof url !== "string" || !url.trim()) {
+            throw new Error("Invalid image URL");
         }
 
-        const response = await fetch("/api/image-access", {
-            method: "GET",
-            cache: "no-store",
-            credentials: "same-origin"
-        });
+        const imageUrl =
+            new URL(url, window.location.href);
+
+        // Local public/static images do not need a token.
+        if (!imageUrl.pathname.includes("/api/drive-image/")) {
+            return retry
+                ? addRetryParameter(imageUrl.toString())
+                : imageUrl.toString();
+        }
+
+        const response = await fetchWithTimeout(
+            "/api/image-access",
+            {
+                method: "GET",
+                cache: "no-store",
+                credentials: "same-origin"
+            }
+        );
 
         if (!response.ok) {
             throw new Error("Could not obtain image access token");
@@ -3812,7 +4048,44 @@ document.addEventListener("DOMContentLoaded", () => {
         signedUrl.searchParams.set("token", data.token);
         signedUrl.searchParams.set("expires", String(data.expires));
 
-        return signedUrl.toString();
+        return retry
+            ? addRetryParameter(signedUrl.toString())
+            : signedUrl.toString();
+    }
+
+    async function fetchDriveImageList(images) {
+
+        const response = await fetchWithTimeout(
+            "/api/drive-images",
+            {
+                method: "GET",
+                cache: "no-store",
+                credentials: "same-origin"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Drive image list unavailable");
+        }
+
+        const data = await response.json();
+        const wanted = images || [];
+        const byNumber = new Map(
+            (data.images || []).map(item => [
+                Number(item.number),
+                item.url
+            ])
+        );
+
+        const list = wanted
+            .map(number => byNumber.get(Number(number)))
+            .filter(url => typeof url === "string" && url.trim());
+
+        if (!list.length) {
+            throw new Error("No matching Drive images");
+        }
+
+        return list;
     }
 
     async function urlExists(url) {
@@ -3917,92 +4190,91 @@ document.addEventListener("DOMContentLoaded", () => {
         updateArrows();
         setStatus("Loading…");
 
-        
-let list;
+        const displayImageList = async list => {
 
-if (source === "drive") {
-    try {
-        const response = await fetch("/api/drive-images");
+            if (!isOpen) return;
 
-        if (!response.ok) {
-            throw new Error("Could not load Drive image list");
-        }
+            urls = list;
 
-        const data = await response.json();
-        const wanted = images || [];
+            const isCert =
+                kind === "doc";
 
-        const byNumber = new Map(
-            (data.images || []).map(item => [
-                Number(item.number),
-                item.url
-            ])
-        );
+            const suffix =
+                isCert
+                    ? (
+                        urls.length === 1
+                            ? "Certificate"
+                            : "Certificates"
+                    )
+                    : "Gallery";
 
-        list = wanted
-            .map(number => byNumber.get(Number(number)))
-            .filter(Boolean);
+            mvTitle.textContent =
+                `${title} - ${suffix}`;
 
-        if (list.length === 0) {
-            throw new Error("No matching Drive images found");
-        }
-    } catch (error) {
-        console.error("Drive images error:", error);
-        setStatus("Could not load the selected Drive images.");
-        return;
-    }
-} else {
-    list = images
-        ? images.map(n => base + n + "." + ext)
-        : await collectImages(base, ext, maxN);
-}
+            mvMeta.textContent =
+                urls.length > 1
+                    ? `${idx + 1} / ${urls.length}`
+                    : " ";
 
-        if (!isOpen) return;
+            if (!urls.length) {
+                setStatus(
+                    "No images found in this folder."
+                );
 
-        urls = list;
+                mvPrev.classList.add("hidden");
+                mvNext.classList.add("hidden");
+                return;
+            }
 
-        const isCert =
-            kind === "doc";
+            setStatus("");
+            updateArrows();
+            renderThumbs();
+            await loadImageAt(idx);
+        };
 
-        const suffix =
-            isCert
-                ? (
-                    urls.length === 1
-                        ? "Certificate"
-                        : "Certificates"
-                )
-                : "Gallery";
-
-        mvTitle.textContent =
-            `${title} - ${suffix}`;
-
-        mvMeta.textContent =
-            urls.length > 1
-                ? `${idx + 1} / ${urls.length}`
-                : " ";
-
-        if (!urls.length) {
+        const retryGalleryList = async () => {
 
             setStatus(
-                "No images found in this folder."
+                "Retrying gallery data…",
+                retryGalleryList,
+                "Retrying…",
+                true
             );
 
-            mvPrev.classList.add(
-                "hidden"
-            );
+            try {
+                await displayImageList(
+                    await fetchDriveImageList(images)
+                );
+            } catch {
+                setStatus(
+                    "Could not load Drive images. Please try again.",
+                    retryGalleryList,
+                    "↻ Retry"
+                );
+            }
+        };
 
-            mvNext.classList.add(
-                "hidden"
-            );
+        if (source === "drive") {
+            try {
+                await displayImageList(
+                    await fetchDriveImageList(images)
+                );
+            } catch {
+                setStatus(
+                    "Could not load Drive images. Please try again.",
+                    retryGalleryList,
+                    "↻ Retry"
+                );
+            }
 
             return;
         }
 
-        setStatus("");
+        const list = images
+            ? images.map(n => base + n + "." + ext)
+            : await collectImages(base, ext, maxN);
 
-        updateArrows();
-        renderThumbs();
-
-        await loadImageAt(idx);
+        await displayImageList(list);
     }
 
     function closeViewer() {
@@ -4067,7 +4339,7 @@ if (source === "drive") {
         loadImageAt(idx);
     }
 
-    function loadImageAt(i) {
+    function loadImageAt(i, retry = false) {
 
         return new Promise(resolve => {
 
@@ -4076,9 +4348,25 @@ if (source === "drive") {
 
             isLoadingImage = true;
 
+            const retryCurrentImage = () =>
+                loadImageAt(i, true);
+
             setStatus(
-                "Loading…"
+                retry
+                    ? "Retrying image…"
+                    : "Loading…",
+                retry ? retryCurrentImage : null,
+                "Retrying…",
+                retry
             );
+
+            const showImageRetry = () => {
+                setStatus(
+                    "This image could not be loaded. Please try again.",
+                    retryCurrentImage,
+                    "↻ Retry Image"
+                );
+            };
 
             mvMeta.textContent =
                 urls.length > 1
@@ -4137,9 +4425,7 @@ if (source === "drive") {
 
                     finish();
                     isLoadingImage = false;
-                    setStatus(
-                        "Failed to load image."
-                    );
+                    showImageRetry();
                     resolve();
                 }, 15000);
 
@@ -4166,9 +4452,7 @@ if (source === "drive") {
                 ) {
                     finish();
                     isLoadingImage = false;
-                    setStatus(
-                        "Failed to load image."
-                    );
+                    showImageRetry();
                     resolve();
                     return;
                 }
@@ -4246,9 +4530,7 @@ if (source === "drive") {
 
                 finish();
                 isLoadingImage = false;
-                setStatus(
-                    "Failed to load image."
-                );
+                showImageRetry();
                 resolve();
             };
 
@@ -4258,7 +4540,7 @@ if (source === "drive") {
             // Fetch a fresh short-lived token each time a Drive image opens.
             (async () => {
                 try {
-                    u = await getSignedImageUrl(u);
+                    u = await getSignedImageUrl(u, retry);
 
                     if (
                         settled ||
@@ -4271,8 +4553,7 @@ if (source === "drive") {
                     }
 
                     preload.src = u;
-                } catch (error) {
-                    console.error("Image access token error:", error);
+                } catch {
                     handleError();
                 }
             })();
