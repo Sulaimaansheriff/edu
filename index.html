@@ -4458,12 +4458,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 mvImg.onerror = fail;
                 // Use the exact signed URL that the preload successfully fetched.
-                mvImg.src = preload.currentSrc || preload.src;
-
-                // Cached images can complete before an onload handler fires in some cases.
-                if (mvImg.complete && mvImg.naturalWidth > 0) {
-                    mvImg.onload();
-                }
+                // Do not inspect mvImg.complete immediately after changing src:
+                // some browsers can still report the previous image's completed
+                // state during a source change, which can falsely settle a new load.
+                const displayUrl = preload.currentSrc || preload.src;
+                mvImg.src = displayUrl;
             };
 
             preload.onload = () => {
