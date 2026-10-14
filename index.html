@@ -1215,7 +1215,7 @@
         }
 
         .mv-thumb.loading::after {
-            content: "Retrying…";
+            content: "Loading…";
         }
 
         .mv-thumb.active {
@@ -3377,6 +3377,9 @@ document.addEventListener("DOMContentLoaded", () => {
             t.setAttribute("aria-label", `Open image ${i + 1}`);
 
             const im = document.createElement("img");
+            // Preserve the original protected API URL for reference; the src is
+            // an in-memory blob URL only after the signed fetch succeeds.
+            im.dataset.originalUrl = u;
             im.alt = "";
             im.loading = "eager";
             im.decoding = "async";
@@ -3990,10 +3993,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const cacheKey = new URL(originalUrl, window.location.href).href;
 
         if (retry) {
-            const oldObjectUrl = imageObjectUrlCache.get(cacheKey);
-            if (oldObjectUrl) URL.revokeObjectURL(oldObjectUrl);
+            // Do not revoke an object URL that may still be assigned to a visible
+            // viewer or thumbnail. Remove it from the cache for a fresh retry;
+            // the browser releases remaining object URLs when this page unloads.
             imageObjectUrlCache.delete(cacheKey);
-            imageObjectUrlPending.delete(cacheKey);
         } else {
             const cached = imageObjectUrlCache.get(cacheKey);
             if (cached) return cached;
