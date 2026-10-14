@@ -4282,6 +4282,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isOpen) return;
 
         isOpen = false;
+        loadRequestId++;
+        isLoadingImage = false;
+        mvImg.onload = null;
+        mvImg.onerror = null;
 
         clearTimeout(clickTimer);
         clearTimeout(tapTimer);
@@ -4343,38 +4347,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return new Promise(resolve => {
 
-            const requestId =
-                ++loadRequestId;
-
+            const requestId = ++loadRequestId;
             isLoadingImage = true;
 
-            const retryCurrentImage = () =>
-                loadImageAt(i, true);
-
-            setStatus(
-                retry
-                    ? "Retrying image…"
-                    : "Loading…",
-                retry ? retryCurrentImage : null,
-                "Retrying…",
-                retry
+            const retryCurrentImage = () => loadImageAt(i, true);
+            const showImageRetry = () => setStatus(
+                "This image could not be loaded. Please try again.",
+                retryCurrentImage,
+                "↻ Retry Image"
             );
 
-            const showImageRetry = () => {
-                setStatus(
-                    "This image could not be loaded. Please try again.",
-                    retryCurrentImage,
-                    "↻ Retry Image"
-                );
-            };
+            mvMeta.textContent = urls.length > 1
+                ? `${i + 1} / ${urls.length}`
+                : " ";
 
-            mvMeta.textContent =
-                urls.length > 1
-                    ? `${i + 1} / ${urls.length}`
-                    : " ";
-
-            let u =
-                urls[i];
+            const originalUrl = urls[i];
+            if (typeof originalUrl !== "string" || !originalUrl.trim()) {
+                isLoadingImage = false;
+                showImageRetry();
+                resolve();
+                return;
+            }
 
             fitScale = 1;
             userZoom = 1;
@@ -4383,180 +4376,120 @@ document.addEventListener("DOMContentLoaded", () => {
             naturalW = 0;
             naturalH = 0;
 
-            mv.classList.remove(
-                "zoomed",
-                "dragging"
-            );
-
-            mvImg.style.transform =
-                "translate(-50%, -50%) scale(1)";
+            mv.classList.remove("zoomed", "dragging");
+            mvImg.style.transform = "translate(-50%, -50%) scale(1)";
             mvImg.style.opacity = "0";
             mvImg.style.visibility = "hidden";
 
-            const startedAt =
-                performance.now();
-            const minimumLoadingMs = 1000;
+            const startedAt = performance.now();
+            const minimumLoadingMs = 250;
             let revealTimer = null;
+            let timeoutId = null;
             let settled = false;
 
             const finish = () => {
-
-                if (settled) return;
+                if (settled) return false;
                 settled = true;
-
-                window.clearTimeout(
-                    timeoutId
-                );
-                window.clearTimeout(
-                    revealTimer
-                );
+                window.clearTimeout(timeoutId);
+                window.clearTimeout(revealTimer);
+                preload.onload = null;
+                preload.onerror = null;
+                mvImg.onload = null;
+                mvImg.onerror = null;
+                return true;
             };
 
-            const timeoutId =
-                window.setTimeout(() => {
+            const isCurrent = () =>
+                requestId === loadRequestId && isOpen;
 
-                    if (
-                        settled ||
-                        requestId !== loadRequestId ||
-                        !isOpen
-                    ) {
-                        return;
-                    }
-
-                    finish();
-                    isLoadingImage = false;
-                    showImageRetry();
-                    resolve();
-                }, 15000);
-
-            const preload = new Image();
-
-            const revealImage = () => {
-
-                if (
-                    settled ||
-                    requestId !== loadRequestId ||
-                    !isOpen
-                ) {
-                    return;
-                }
-
-                naturalW =
-                    preload.naturalWidth || 0;
-                naturalH =
-                    preload.naturalHeight || 0;
-
-                if (
-                    !naturalW ||
-                    !naturalH
-                ) {
-                    finish();
-                    isLoadingImage = false;
-                    showImageRetry();
-                    resolve();
-                    return;
-                }
-
-                
-hasLoadedFirstImage = true;
-mvImg.src = preload.src;
-
-
-                window.requestAnimationFrame(() => {
-
-                    if (
-                        requestId !== loadRequestId ||
-                        !isOpen
-                    ) {
-                        return;
-                    }
-
-                    fitScale =
-                        calculateFitScale();
-                    userZoom = 1;
-                    offX = 0;
-                    offY = 0;
-                    applyTransform();
-
-                    mvImg.style.opacity = "1";
-                    mvImg.style.visibility = "visible";
-                    setThumbsVisible(
-                        thumbnailVisibilityBeforeClose
-                    );
-                    finish();
-                    isLoadingImage = false;
-                    setStatus("");
-                    resolve();
-                });
-            };
-
-            const handleLoad = () => {
-
-                if (
-                    settled ||
-                    requestId !== loadRequestId ||
-                    !isOpen
-                ) {
-                    return;
-                }
-
-                const elapsed =
-                    performance.now() - startedAt;
-                const delay =
-                    Math.max(
-                        0,
-                        minimumLoadingMs - elapsed
-                    );
-
-                if (delay > 0) {
-                    revealTimer =
-                        window.setTimeout(
-                            revealImage,
-                            delay
-                        );
-                    return;
-                }
-
-                revealImage();
-            };
-
-            const handleError = () => {
-
-                if (
-                    settled ||
-                    requestId !== loadRequestId ||
-                    !isOpen
-                ) {
-                    return;
-                }
-
+            const fail = () => {
+                if (settled || !isCurrent()) return;
                 finish();
                 isLoadingImage = false;
                 showImageRetry();
                 resolve();
             };
 
-            preload.onload = handleLoad;
-            preload.onerror = handleError;
+            const timeout = () => {
+                if (settled || !isCurrent()) return;
+                fail();
+            };
 
-            // Fetch a fresh short-lived token each time a Drive image opens.
+            const preload = new Image();
+
+            timeoutId = window.setTimeout(timeout, 20000);
+
+            const revealImage = () => {
+                if (settled || !isCurrent()) return;
+
+                const width = preload.naturalWidth || 0;
+                const height = preload.naturalHeight || 0;
+                if (!width || !height) {
+                    fail();
+                    return;
+                }
+
+                // Wait for the actual popup image element to load too.
+                // A successful preload alone does not guarantee that mvImg has rendered it.
+                mvImg.onload = () => {
+                    if (settled || !isCurrent()) return;
+
+                    naturalW = mvImg.naturalWidth || width;
+                    naturalH = mvImg.naturalHeight || height;
+                    if (!naturalW || !naturalH) {
+                        fail();
+                        return;
+                    }
+
+                    finish();
+                    hasLoadedFirstImage = true;
+                    fitScale = calculateFitScale();
+                    userZoom = 1;
+                    offX = 0;
+                    offY = 0;
+                    applyTransform();
+                    mvImg.style.opacity = "1";
+                    mvImg.style.visibility = "visible";
+                    setThumbsVisible(thumbnailVisibilityBeforeClose);
+                    isLoadingImage = false;
+                    setStatus("");
+                    resolve();
+                };
+
+                mvImg.onerror = fail;
+                // Use the exact signed URL that the preload successfully fetched.
+                mvImg.src = preload.currentSrc || preload.src;
+
+                // Cached images can complete before an onload handler fires in some cases.
+                if (mvImg.complete && mvImg.naturalWidth > 0) {
+                    mvImg.onload();
+                }
+            };
+
+            preload.onload = () => {
+                if (settled || !isCurrent()) return;
+                const elapsed = performance.now() - startedAt;
+                const delay = Math.max(0, minimumLoadingMs - elapsed);
+                if (delay > 0) {
+                    revealTimer = window.setTimeout(revealImage, delay);
+                } else {
+                    revealImage();
+                }
+            };
+            preload.onerror = fail;
+
             (async () => {
                 try {
-                    u = await getSignedImageUrl(u, retry);
-
-                    if (
-                        settled ||
-                        requestId !== loadRequestId ||
-                        !isOpen
-                    ) {
+                    const signedUrl = await getSignedImageUrl(originalUrl, retry);
+                    if (settled || !isCurrent()) {
                         finish();
                         resolve();
                         return;
                     }
-
-                    preload.src = u;
-                } catch {
-                    handleError();
+                    preload.src = signedUrl;
+                } catch (error) {
+                    console.error("Could not prepare image URL:", error);
+                    fail();
                 }
             })();
         });
